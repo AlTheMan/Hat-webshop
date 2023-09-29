@@ -1,4 +1,4 @@
-package com.example.dist_sys_lab1_webshopv2;
+package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
 
