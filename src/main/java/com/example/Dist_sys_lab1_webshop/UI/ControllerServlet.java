@@ -13,9 +13,11 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class ControllerServlet extends HttpServlet {
     private String message;
+    private String message_buy_item;
 
     public void init() {
         message = "Hello World!";
+        message_buy_item="Successfully bought item";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -25,6 +27,7 @@ public class ControllerServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
+        out.println("<h1>" + message_buy_item + "</h1>");
         out.println("</body></html>");
     }
 
