@@ -5,8 +5,13 @@ import java.io.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+
+/**
+ * All interaktion med JSP-sidorna ska gå via denna
+ *
+ */
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+public class ControllerServlet extends HttpServlet {
     private String message;
 
     public void init() {
