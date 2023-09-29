@@ -31,18 +31,21 @@ public class ControllerServlet extends HttpServlet {
         response.setContentType("text/html");
 
         String path = request.getServletPath(); // Hämta sökvägen för den aktuella begäran
-        PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter(); //denna används inte
 
-        //här kan vi ha en switch sats:
-        if ("/hello-servlet".equals(path)) {
-            hello_servlet(response);
-        } else if ("/add-item-servlet".equals(path)) {
-            out.println("<h1>Item Added!</h1>");
-        } else if ("/remove-item-servlet".equals(path)) {
-            out.println("<h1>Item Removed!</h1>");
+        switch (path){
+            case "/hello-servlet":
+                hello_servlet(response);
+                break;
+            case "/add-item-servlet":
+                out.println("<h1>Item Added!</h1>");
+                break;
+            case "/remove-item-servlet":
+                out.println("<h1>Item Removed!</h1>");
+                break;
+            default: break;
+
         }
-
-
 
     }
 

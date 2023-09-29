@@ -9,8 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="048291d8-efeb-4832-b27b-fb1476335397" name="Changes" comment="Ändrade filnamn">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="048291d8-efeb-4832-b27b-fb1476335397" name="Changes" comment="Switch för servlet">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +136,14 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1695993178692</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="Switch för servlet">
+      <option name="closed" value="true" />
+      <created>1695999774800</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1695999774800</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +152,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
     <MESSAGE value="Ändrade filnamn" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ändrade filnamn" />
+    <MESSAGE value="Switch för servlet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Switch för servlet" />
   </component>
 </project>
