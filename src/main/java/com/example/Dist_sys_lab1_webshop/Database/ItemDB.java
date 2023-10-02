@@ -12,13 +12,11 @@ import java.util.Collections;
 
 public class ItemDB extends Item {
 
-
 	private ItemDB(int id, String name, String description, double price, int quantity) {
 		super(id, name, description, price, quantity);
 	}
 
-	public static Collection<Item> getItemsFromDb() {
-
+	public static Collection<Item> getDBItemsAll() {
 		Connection con = DBManager.getConnection();
 		Collection<Item> itemCollection = new ArrayList<>();
 		try {
@@ -32,14 +30,12 @@ public class ItemDB extends Item {
 				String description = resultSet.getString("description");
 				double price = resultSet.getDouble("price");
 				int quantity = resultSet.getInt("quantity");
-				itemCollection.add(new Item(id, name, description, price, quantity));
+				itemCollection.add(new ItemDB(id, name, description, price, quantity));
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-
 		return itemCollection;
-
 	}
 
 

@@ -12,15 +12,28 @@
     <title>Title</title>
 </head>
 <body>
-  <% ArrayList<Item> items = (ArrayList<Item>) request.getAttribute("items");
+<%
+    ArrayList<Item> shopItems = (ArrayList<Item>) request.getAttribute("items");
+%>
 
-  %>
-
-  <tr>
-      <td>name</td> <td><%= items.get(0).getName() %></td>
-      <td>id</td> <td> <%= items.get(0).getId() %> </td>
-
-
-  </tr>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    <% for (Item item : shopItems) { %>
+    <tr>
+        <td><%= item.getId() %></td>
+        <td><%= item.getName() %></td>
+        <td><%= item.getDescription() %></td>
+        <td><%= item.getPrice() %></td>
+        <td><%= item.getQuantity() %></td>
+    </tr>
+    <% } %>
+</table>
 </body>
+
 </html>
