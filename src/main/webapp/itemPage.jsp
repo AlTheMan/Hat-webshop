@@ -13,12 +13,14 @@
 </head>
 <body>
   <% ArrayList<Item> items = (ArrayList<Item>) request.getAttribute("items");
-        for (Item i : items) {
-
-        }
-
-
 
   %>
+
+  <tr>
+      <td>name</td> <td><%= items.get(0).getName() %></td>
+      <td>id</td> <td> <%= items.get(0).getId() %> </td>
+
+
+  </tr>
 </body>
 </html>
