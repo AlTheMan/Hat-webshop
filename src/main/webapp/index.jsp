@@ -7,10 +7,17 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-<h1><%= "Hattshopp" %>
+
 </h1>
 <br/>
+<div class="header">
+    <h1><%= "Hattshopp" %>
+</div>
+<div class="main-content">
+
+
 <a href="hello-servlet">Hello Servlet</a>
+
 <br>
 <br>
 <br>
@@ -23,12 +30,17 @@
 <br>
 <a href="remove-item-servlet">Här finns en hatt</a>
 <br>
-<p>Dagens datum: <%= new java.util.Date() %></p>
 <br>
-<form action="remove-item-servlet" method="post">
-    Name:<input type="text" name="name"><br>
-    Password:<input type="password" name="password"><br>
-    <input type="submit" value="login">
-</form>
+    <div class="container">
+        <form action="remove-item-servlet" method="post">
+            Name:<input type="text" name="name"><br>
+            Password:<input type="password" name="password"><br>
+            <input type="submit" value="login">
+        </form>
+    </div>
+</div>
+<div class ="footer">
+    <p>Dagens datum: <%= new java.util.Date() %></p>
+</div>
 </body>
 </html>
