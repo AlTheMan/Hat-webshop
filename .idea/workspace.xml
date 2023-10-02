@@ -10,12 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048291d8-efeb-4832-b27b-fb1476335397" name="Changes" comment="Switch för servlet">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/DBManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/hatPage.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/shoppingBasket.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/MockDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/MockDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -115,6 +132,7 @@
       <workItem from="1695993693707" duration="338000" />
       <workItem from="1695994063303" duration="205000" />
       <workItem from="1695995540990" duration="942000" />
+      <workItem from="1696152079671" duration="11575000" />
     </task>
     <task id="LOCAL−00001" summary="first">
       <option name="closed" value="true" />

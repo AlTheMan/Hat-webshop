@@ -18,9 +18,17 @@
 <a>Köp Hatt</a>
 <br>
 <img src="images/victoriantophat.jpg" alt="viktoriansk hatt 1000 kr" width="150" height="150">
-<a href="add-item-servlet">+</a>
-<a href="remove-item-servlet">-</a>
+<br>
+<a href="add-item-servlet">Kundkorg</a>
+<br>
+<a href="remove-item-servlet">Här finns en hatt</a>
 <br>
 <p>Dagens datum: <%= new java.util.Date() %></p>
+<br>
+<form action="remove-item-servlet" method="post">
+    Name:<input type="text" name="name"><br>
+    Password:<input type="password" name="password"><br>
+    <input type="submit" value="login">
+</form>
 </body>
 </html>
