@@ -69,7 +69,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void hello_servlet(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
-        request.setAttribute("items", ItemHandler.getItems());
+        request.setAttribute("items", ItemHandler.getAllItems());
         request.getRequestDispatcher("itemPage.jsp").forward(request, response);
     }
 }
