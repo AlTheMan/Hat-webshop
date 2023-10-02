@@ -2,6 +2,7 @@ package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
 
+import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
 import com.example.Dist_sys_lab1_webshop.Model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -40,7 +41,7 @@ public class ControllerServlet extends HttpServlet {
 
         switch (path){
             case "/hello-servlet":
-                hello_servlet(response);
+                hello_servlet(response, request);
                 System.out.println("Hej");
                 break;
             case "/add-item-servlet":
@@ -67,13 +68,9 @@ public class ControllerServlet extends HttpServlet {
     public void destroy() {
     }
 
-    private void hello_servlet(HttpServletResponse response) throws IOException {
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("<h1>" + message_buy_item + "</h1>");
-        out.println("</body></html>");
+    private void hello_servlet(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+        request.setAttribute("items", ItemHandler.getItems());
+        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
     }
 }
 

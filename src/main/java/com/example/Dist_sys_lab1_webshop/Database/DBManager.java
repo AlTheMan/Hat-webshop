@@ -7,36 +7,26 @@ import java.sql.SQLException;
 
 public class DBManager {
 
-	private static String  url = "jdbc:mysql://localhost:3306/dist_labb1";
+	private static String  url = "jdbc:mysql://localhost:3306/dist1";
 	private static String rootUser = "distlab1admin";
 	private static String passw = "1234";
 
-	private Connection connection;
+	private static Connection connection;
 
-	private static DBManager manager;
 
-	private DBManager(){
-
-	}
-
-	public static DBManager getInstance() throws SQLException {
-		if (manager != null) {
-			return manager;
+	public static Connection getConnection() {
+		if (connection != null) {
+			return connection;
 		}
-		manager = new DBManager();
-		manager.connection = DriverManager.getConnection(url, rootUser, passw);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(url, rootUser, passw);
+			return connection;
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new RuntimeException(e);
+		}
 
-		return manager;
 	}
-
-	public Connection getConnection(){
-		return manager.connection;
-	}
-
-
-
-
-
 
 
 }

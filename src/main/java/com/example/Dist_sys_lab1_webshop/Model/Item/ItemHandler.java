@@ -10,10 +10,10 @@ public class ItemHandler {
 
 
 
-	public static ArrayList<Item> getItems() throws SQLException {
+	public static ArrayList<Item> getItems()  {
 
 		Collection<Item> itemCollection = ItemDB.getItemsFromDb();
-
+		return new ArrayList<>(itemCollection);
 
 	}
 
