@@ -27,5 +27,13 @@ public class Shoppingcart {
         }
         items.add(new ShoppingItem(item, nrOfItems));
     }
+    public void removeItems(Item item, int nrOfItemsToRemove) {
+        int index = items.indexOf(item);
+        if(index!=-1){                  //found matching object
+            int newNrOfItems = items.get(index).getNrOfItems() - nrOfItemsToRemove;
+            if(newNrOfItems<0) newNrOfItems=0;
+            items.set(index,new ShoppingItem(item,newNrOfItems));
+        }
+    }
 
 }

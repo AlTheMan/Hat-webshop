@@ -4,6 +4,7 @@ import java.io.*;
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
+import com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
 import jakarta.servlet.ServletException;
@@ -81,9 +82,11 @@ public class ControllerServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         User user = UserHandler.authenticateUser(name, password);
+        Shoppingcart shoppingcart = new Shoppingcart();
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
+            session.setAttribute("shopingcart", shoppingcart);
         }
         response.sendRedirect("index.jsp");
     }

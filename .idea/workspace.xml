@@ -10,17 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048291d8-efeb-4832-b27b-fb1476335397" name="Changes" comment="Switch för servlet">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/UserDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/UserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/DBManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/MockDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/MockDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/Shoppingcart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/Shoppingcart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/hatPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/hatPage.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/itemPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/itemPage.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
