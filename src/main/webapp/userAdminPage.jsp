@@ -41,28 +41,41 @@
   <%
 
     @SuppressWarnings("unchecked")
-    ArrayList<User> users = (ArrayList<User>) request.getAttribute("users"); %>
+    ArrayList<User> users = (ArrayList<User>) request.getAttribute("users");
+    User userToEdit = null; %>
   <tr>
     <th>ID</th>
     <th>Username</th>
     <th>Privilege</th>
     <th>Email</th>
+    <th></th>
   </tr>
-  <% for (User u : users) {%>
+  <% for (int i = 0; i < users.size(); i++) {%>
   <tr>
-    <td><%=u.getId()%></td>
-    <td><%=u.getUserName()%></td>
-    <td><%=u.getPrivilege()%></td>
-    <td><%=u.getEmail()%></td>
+    <td><%=users.get(i).getId()%></td>
+    <td><%=users.get(i).getUserName()%></td>
+    <td><%=users.get(i).getPrivilege()%></td>
+    <td><%=users.get(i).getEmail()%></td>
+    <td>
+      <form method="post" action="editUser">
+        <!-- Use a hidden input field to capture the user ID -->
+        <input type="hidden" name="userId" value="<%= users.get(i).getId() %>">
+        <input type="submit" value="Manage">
+      </form>
+    </td>
   </tr>
   <%}%>
 </table>
 
+<%
+if(userToEdit != null) { %>
 
-<form method="post" action="hatPage">
-  ID: <label><input type="number" name="user_id" max="<%=users.size()%>" min="0"></label>
-
+<form method="post" action="editUser">
+  User ID to manage: <%=userToEdit.getId()%>
+  <label><input type="text" name="username" ></label>
 </form>
+
+<%}%>
 
 </body>
 </html>

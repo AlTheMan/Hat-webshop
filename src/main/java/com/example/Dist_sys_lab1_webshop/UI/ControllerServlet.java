@@ -27,7 +27,9 @@ import jakarta.servlet.annotation.*;
         "/hatPage",
         "/login",
         "/userAdmin",
-        "/addItemToShoppingCart"})
+        "/addItemToShoppingCart",
+        "/editUser"})
+
 public class ControllerServlet extends HttpServlet {
     private final static String READONLYUSER = "distlab1user";
     private String message;
@@ -65,9 +67,12 @@ public class ControllerServlet extends HttpServlet {
             case "/addItemToShoppingCart":
                 handleAddItemToShoppingCart(request,response);
                 break;
-            default: break;
-
+            case "/editUser":
+                handleEditUserServlet(request, response);
+                break;
+            default:break;
         }
+
 
     }
 
@@ -87,6 +92,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
 
+
     private void handleAdminServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
@@ -95,6 +101,13 @@ public class ControllerServlet extends HttpServlet {
                 request.getRequestDispatcher("userAdminPage.jsp").forward(request, response);
             }
         }
+    }
+
+    private void handleEditUserServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        System.out.println("EditUsers");
+        System.out.println(request.getParameter("userToEdit"));
+        response.sendRedirect("editUserPage.jsp");
 
     }
 
