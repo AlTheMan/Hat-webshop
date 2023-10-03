@@ -12,6 +12,9 @@ public class ItemHandler {
 		return new ArrayList<>(itemCollection);
 
 	}
+	public static Item getItemByID(int id){
+		return Item.getDBItemByID(id);
+	}
 
 
 }

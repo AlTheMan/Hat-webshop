@@ -37,6 +37,26 @@ public class ItemDB extends Item {
 		}
 		return itemCollection;
 	}
+	public static Item getDBItemByID(int idInput) {
+		Connection con = DBManager.getConnection();
+		Item item = null;
+		try {
+			Statement statement = con.createStatement();
+			String query = "SELECT * from item WHERE ID="+idInput; //TODO: ej säkert mot SQL-injection. Gör som Emil gjorde i UserDB.getUserFromDB med prepared statement
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
+				String description = resultSet.getString("description");
+				double price = resultSet.getDouble("price");
+				int quantity = resultSet.getInt("quantity");
+				item = new ItemDB(id, name, description, price, quantity);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return item;
+	}
 
 
 }

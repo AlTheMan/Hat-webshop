@@ -30,4 +30,12 @@ public class ShoppingItem {
     public void setNrOfItems(int nrOfItems) {
         this.nrOfItems = nrOfItems;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingItem{" +
+                "item=" + item +
+                ", nrOfItems=" + nrOfItems +
+                '}';
+    }
 }

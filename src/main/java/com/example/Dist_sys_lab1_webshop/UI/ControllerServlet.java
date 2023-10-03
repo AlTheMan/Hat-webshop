@@ -2,6 +2,7 @@ package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
+import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart;
@@ -25,7 +26,8 @@ import jakarta.servlet.annotation.*;
         "/wares",
         "/hatPage",
         "/login",
-        "/userAdmin"})
+        "/userAdmin",
+        "/addItemToShoppingCart"})
 public class ControllerServlet extends HttpServlet {
     private final static String READONLYUSER = "distlab1user";
     private String message;
@@ -43,7 +45,6 @@ public class ControllerServlet extends HttpServlet {
         response.setContentType("text/html");
 
         String path = request.getServletPath(); // Hämta sökvägen för den aktuella begäran
-
         switch (path){
             case "/shoppingBasket":
                 response.sendRedirect("shoppingBasket.jsp");
@@ -60,10 +61,29 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "/userAdmin":
                 handleAdminServlet(request, response);
+                break;
+            case "/addItemToShoppingCart":
+                handleAddItemToShoppingCart(request,response);
+                break;
             default: break;
 
         }
 
+    }
+
+    private void handleAddItemToShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Shoppingcart shoppingcart = getShopingcartSession(request);
+        if (shoppingcart != null) {
+            String stringItemId = request.getParameter("itemId");
+            int itemId = Integer.parseInt(stringItemId);
+            Item item = ItemHandler.getItemByID(itemId);
+            shoppingcart.addItems(item,1);
+            System.out.println(shoppingcart);
+            System.out.println("Sucessfully added item to shopping cart");
+        }
+        else{
+            System.out.println("Did not add item to shopping cart");
+        }
     }
 
 
@@ -101,7 +121,11 @@ public class ControllerServlet extends HttpServlet {
     private User getUserSession(HttpServletRequest request){
         HttpSession session = request.getSession();
         return (User) session.getAttribute("user");
+    }
 
+    private Shoppingcart getShopingcartSession(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        return (Shoppingcart) session.getAttribute("shoppingcart");
     }
 
 }

@@ -32,8 +32,13 @@
         <td><%= item.getDescription() %></td>
         <td><%= item.getPrice() %></td>
         <td><%= item.getQuantity() %></td>
+        <form action="addItemToShoppingCart" method="post">
+            <input type="hidden" name="itemId" value="<%= item.getId() %>">
+            <input type="submit" value="+">
+        </form>
     </tr>
     <% } %>
+
 </table>
 
 </body>

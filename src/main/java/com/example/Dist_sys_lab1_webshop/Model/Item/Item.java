@@ -33,6 +33,8 @@ public class Item {
 		return id;
 	}
 
+	public static Item getDBItemByID(int id){return ItemDB.getDBItemByID(id);} //TODO: skicka tillbaka en kopia istället?
+
 	public String getName() {
 		return name;
 	}

@@ -36,4 +36,10 @@ public class Shoppingcart {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Shoppingcart{" +
+                "items=" + items +
+                '}';
+    }
 }
