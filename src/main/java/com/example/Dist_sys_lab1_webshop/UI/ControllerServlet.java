@@ -104,6 +104,7 @@ public class ControllerServlet extends HttpServlet {
                 }
             } catch (SQLException e) {
                 System.out.println("Purchase was not successful");
+                user.getShoppingcart().emptyCart();
                 //throw new RuntimeException(e);
             }
 
