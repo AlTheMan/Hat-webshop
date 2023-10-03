@@ -31,7 +31,7 @@ public class ControllerServlet extends HttpServlet {
     public void init() {
         message = "Hello World!";
         message_buy_item="Successfully bought item";
-        DBManager.setCurrentUser(READONLYUSER); //initerar användaren till read-only
+        DBManager.setInitUser(); //initerar användaren till read-only
     }
 
     @Override

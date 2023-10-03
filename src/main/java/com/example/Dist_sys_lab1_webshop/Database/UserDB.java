@@ -1,15 +1,13 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
-import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
+import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class UserDB extends User {
-	private UserDB(String userName, String password, String email) {
-		super(userName, password, email);
+	private UserDB(String userName, String password, String email, Privilege privilege) {
+		super(userName, password, email, privilege);
 	}
 
 	private UserDB(){
@@ -28,13 +26,15 @@ public class UserDB extends User {
 					user = new UserDB();
 					user.setUserName(resultSet.getString("username"));
 					user.setEmail(resultSet.getString("email"));
+					user.setPrivilege(resultSet.getString("privilege"));
 				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		if (user != null) {
+			DBManager.setUserPrivilege(user.getPrivilege());
+		}
 		return user;
 	}
 

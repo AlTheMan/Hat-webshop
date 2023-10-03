@@ -14,7 +14,7 @@
     <h1><%= "Hattshopp" %> </h1>
 </div>
 <div class="main-content">
-    
+
 <br>
 <h3>Köp Hatt</h3>
 <br>

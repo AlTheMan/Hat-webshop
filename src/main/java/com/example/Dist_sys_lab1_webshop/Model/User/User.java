@@ -8,14 +8,24 @@ public class User {
 	private String userName;
 	private String password;
 	private String email;
+	private Privilege privilege;
 
-	public User(String userName, String password, String email) {
+	public User(String userName, String password, String email, Privilege privilege) {
 		this.password = password;
 		this.userName = userName;
 		this.email = email;
+		this.privilege = privilege;
 	}
 	public User(){
 
+	}
+
+	public Privilege getPrivilege() {
+		return privilege;
+	}
+
+	public void setPrivilege(String privilege) {
+		this.privilege = Privilege.valueOf(privilege);
 	}
 
 	public static User getUserFromDB(String userName, String password){
@@ -28,6 +38,7 @@ public class User {
 		User user = new User();
 		user.userName = dbUser.userName;
 		user.email = dbUser.email;
+		user.privilege = dbUser.privilege;
 		user.password = "********";
 		return user;
 	}
