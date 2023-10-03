@@ -45,6 +45,11 @@ body {
     border-top: 1px solid #e2e2e2;
 }
 
+.table {
+    border: 2px solid black;
+
+}
+
 /* Centering and styling links */
 a {
     color: #007BFF;

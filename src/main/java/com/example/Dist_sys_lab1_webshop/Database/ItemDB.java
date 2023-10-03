@@ -33,7 +33,7 @@ public class ItemDB extends Item {
 				itemCollection.add(new ItemDB(id, name, description, price, quantity));
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		return itemCollection;
 	}
