@@ -1,7 +1,9 @@
 package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
@@ -114,10 +116,23 @@ public class ControllerServlet extends HttpServlet {
     private void handleEditUserServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         System.out.println("EditUsers");
+        HashMap<String, String> values = new HashMap<>();
         var strings = request.getParameterNames();
         while (strings.hasMoreElements()) {
-            System.out.println(request.getParameter(strings.nextElement()));
+            String name = strings.nextElement();
+            String value = request.getParameter(name);
+            System.out.println("Name: " + name + ", Value: " + value);
+            values.put(name, value);
         }
+
+
+        UserHandler.updateUser(values);
+
+
+
+
+
+
 
         handleAdminServlet(request, response);
 
