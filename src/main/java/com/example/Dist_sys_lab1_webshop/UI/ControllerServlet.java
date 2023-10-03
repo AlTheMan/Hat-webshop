@@ -72,17 +72,13 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void handleAddItemToShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Shoppingcart shoppingcart = getShopingcartSession(request);
-        if (shoppingcart != null) {
+        User user = getUserSession(request);
+        if (user != null) {
             String stringItemId = request.getParameter("itemId");
             int itemId = Integer.parseInt(stringItemId);
             Item item = ItemHandler.getItemByID(itemId);
-            shoppingcart.addItems(item,1);
-            System.out.println(shoppingcart);
-            System.out.println("Sucessfully added item to shopping cart");
-        }
-        else{
-            System.out.println("Did not add item to shopping cart");
+            user.getShoppingcart().addItems(item,1);
+            System.out.println(user.getShoppingcart().toString());
         }
     }
 
@@ -102,11 +98,9 @@ public class ControllerServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         User user = UserHandler.authenticateUser(name, password);
-        Shoppingcart shoppingcart = new Shoppingcart();
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            session.setAttribute("shopingcart", shoppingcart);
         }
         response.sendRedirect("index.jsp");
     }
@@ -121,11 +115,6 @@ public class ControllerServlet extends HttpServlet {
     private User getUserSession(HttpServletRequest request){
         HttpSession session = request.getSession();
         return (User) session.getAttribute("user");
-    }
-
-    private Shoppingcart getShopingcartSession(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        return (Shoppingcart) session.getAttribute("shoppingcart");
     }
 
 }

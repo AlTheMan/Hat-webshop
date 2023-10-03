@@ -27,15 +27,12 @@ public class ShoppingItem {
         this.item = item;
     }
 
-    public void setNrOfItems(int nrOfItems) {
-        this.nrOfItems = nrOfItems;
-    }
+    public void addNrOfItems(int nrOfItems){this.nrOfItems+=nrOfItems;}
 
     @Override
     public String toString() {
-        return "ShoppingItem{" +
-                "item=" + item +
-                ", nrOfItems=" + nrOfItems +
-                '}';
+        return "itemName:" + item.getName() +
+                ", itemID:" + item.getId() +
+                ", nrOfItems=" + nrOfItems;
     }
 }

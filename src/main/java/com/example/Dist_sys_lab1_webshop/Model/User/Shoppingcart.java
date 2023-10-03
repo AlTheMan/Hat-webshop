@@ -22,8 +22,9 @@ public class Shoppingcart {
     public void addItems(Item item, int nrOfItems) {
         int index = items.indexOf(item);
         if(index!=-1){                  //found matching object
-            int newNrOfItems = nrOfItems + items.get(index).getNrOfItems();
-            items.set(index,new ShoppingItem(item,newNrOfItems));
+            items.get(index).addNrOfItems(nrOfItems);
+            int newNrOfItems= items.get(index).getNrOfItems();
+            items.set(index,new ShoppingItem(item,newNrOfItems));  //behövs ens denna rad. Objektet ändras ju
         }
         items.add(new ShoppingItem(item, nrOfItems));
     }
@@ -38,8 +39,6 @@ public class Shoppingcart {
 
     @Override
     public String toString() {
-        return "Shoppingcart{" +
-                "items=" + items +
-                '}';
+        return "Shoppingcart: " + items;
     }
 }

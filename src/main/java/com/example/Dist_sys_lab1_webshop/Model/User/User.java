@@ -11,13 +11,18 @@ public class User {
 	private String password;
 	private String email;
 	private Privilege privilege;
+	private Shoppingcart shoppingcart;
 
-	public User(String username, String password, String email, Privilege privilege, int id) {
+	public User(String username, String password, String email, Privilege privilege, int id, Shoppingcart shoppingcart) {
 		this.password = password;
 		this.userName = username;
 		this.email = email;
 		this.privilege = privilege;
 		this.id = id;
+		this.shoppingcart=shoppingcart;
+	}
+	public User(String username, String password, String email, Privilege privilege, int id){
+		this(username,password,email,privilege,id,new Shoppingcart());
 	}
 
 
@@ -27,6 +32,7 @@ public class User {
 		this.privilege = Privilege.valueOf(privilege);
 		this.id = id;
 		this.password = "******";
+		this.shoppingcart=new Shoppingcart();
 	}
 
 
@@ -63,6 +69,9 @@ public class User {
 		user.privilege = dbUser.privilege;
 		user.password = "********";
 		return user;
+	}
+	public Shoppingcart getShoppingcart(){
+		return shoppingcart;
 	}
 
 	public String getEmail() {
