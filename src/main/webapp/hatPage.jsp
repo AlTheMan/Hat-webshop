@@ -19,19 +19,13 @@
 <%
     // Vet inte hur man kan se hur en session har en user satt eller inte
 	session = request.getSession();
-	try {
-        User user = (User) session.getAttribute("user"); %>
-        <p><%=user.getUserName()%></p>
-        <p><%=user.getEmail()%></p>
-        <p><%=user.getPrivilege()%></p><%
-    } catch (Exception e) {
-        System.out.println("User not set");
-    }
-%>
 
-
-
-
+        User user = (User) session.getAttribute("user");
+		if (user != null) { %>
+            <p><%=user.getUserName()%></p>
+            <p><%=user.getEmail()%></p>
+            <p><%=user.getPrivilege()%></p>
+        <%}%>
 
 </body>
 </html>

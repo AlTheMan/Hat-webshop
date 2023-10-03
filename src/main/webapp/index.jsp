@@ -35,6 +35,12 @@
         <input type="submit" value="Shopping basket">
     </form>
 <br>
+
+    <br>
+    <form method="post" action="userAdmin">
+        <input type="submit" value="Handle users">
+    </form>
+    <br>
     <div class="container">
         <form method= "post" action="login">
             Username:<label><input type="text" name="name"></label><br>

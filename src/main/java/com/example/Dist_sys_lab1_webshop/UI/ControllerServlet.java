@@ -3,6 +3,7 @@ package com.example.Dist_sys_lab1_webshop.UI;
 import java.io.*;
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
+import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
 import jakarta.servlet.ServletException;
@@ -22,7 +23,8 @@ import jakarta.servlet.annotation.*;
         "/shoppingBasket",
         "/wares",
         "/hatPage",
-        "/login"})
+        "/login",
+        "/userAdmin"})
 public class ControllerServlet extends HttpServlet {
     private final static String READONLYUSER = "distlab1user";
     private String message;
@@ -55,8 +57,22 @@ public class ControllerServlet extends HttpServlet {
             case "/login":
                 handleLoginServlet(request, response);
                 break;
+            case "/userAdmin":
+                handleAdminServlet(request, response);
             default: break;
 
+        }
+
+    }
+
+
+    private void handleAdminServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        User user = getUserSession(request);
+        if (user != null) {
+            if (user.getPrivilege() == Privilege.ADMIN){
+                request.setAttribute("users", UserHandler.getAllUsers());
+                request.getRequestDispatcher("userAdminPage.jsp").forward(request, response);
+            }
         }
 
     }
@@ -78,5 +94,12 @@ public class ControllerServlet extends HttpServlet {
 
     public void destroy() {
     }
+
+    private User getUserSession(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        return (User) session.getAttribute("user");
+
+    }
+
 }
 
