@@ -13,6 +13,7 @@
 </head>
 <body>
 <%
+    @SuppressWarnings("unchecked")
     ArrayList<Item> shopItems = (ArrayList<Item>) request.getAttribute("items");
 %>
 
@@ -34,6 +35,7 @@
     </tr>
     <% } %>
 </table>
+
 </body>
 
 </html>
