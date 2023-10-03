@@ -37,7 +37,7 @@ public class User {
 
 
 	public User(){
-
+		this.shoppingcart=new Shoppingcart();
 	}
 
 	public int getId() {
@@ -68,6 +68,7 @@ public class User {
 		user.email = dbUser.email;
 		user.privilege = dbUser.privilege;
 		user.password = "********";
+		user.shoppingcart=new Shoppingcart();
 		return user;
 	}
 	public Shoppingcart getShoppingcart(){

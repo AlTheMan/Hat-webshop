@@ -20,13 +20,15 @@ public class Shoppingcart {
     }
 
     public void addItems(Item item, int nrOfItems) {
-        int index = items.indexOf(item);
-        if(index!=-1){                  //found matching object
-            items.get(index).addNrOfItems(nrOfItems);
-            int newNrOfItems= items.get(index).getNrOfItems();
-            items.set(index,new ShoppingItem(item,newNrOfItems));  //behövs ens denna rad. Objektet ändras ju
+        for(int i =0; i<items.size(); i++){
+            if(items.get(i).getItem().getId()==item.getId()){ //if item already exist, just increment the nrofitems of that item
+                items.get(i).addNrOfItems(nrOfItems);
+                return;
+            }
         }
+        System.out.println("item not found");
         items.add(new ShoppingItem(item, nrOfItems));
+
     }
     public void removeItems(Item item, int nrOfItemsToRemove) {
         int index = items.indexOf(item);
