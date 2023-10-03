@@ -93,6 +93,10 @@ public class ControllerServlet extends HttpServlet {
             System.out.println(user.getShoppingcart().toString());
             //System.out.println("nr of items in index 0: "+user.getShoppingcart().getItems().get(0).getNrOfItems());
         }
+        // After adding the item, redirect back to itemPage.jsp
+        request.setAttribute("items", ItemHandler.getAllItems());
+        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
+
     }
     private void handleBuyItems(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
@@ -109,6 +113,10 @@ public class ControllerServlet extends HttpServlet {
             }
 
         }
+        // After adding the item, redirect back to itemPage.jsp
+        request.setAttribute("items", ItemHandler.getAllItems());
+        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
+
     }
 
 
