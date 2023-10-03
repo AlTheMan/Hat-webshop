@@ -36,11 +36,14 @@
             <input type="hidden" name="itemId" value="<%= item.getId() %>">
             <input type="submit" value="+">
         </form>
+
     </tr>
     <% } %>
 
 </table>
-
+<form action="buyItems" method="post">
+    <input type="submit" value="Purchase">
+</form>
 </body>
 
 </html>

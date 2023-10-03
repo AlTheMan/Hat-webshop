@@ -72,6 +72,9 @@ public class ControllerServlet extends HttpServlet {
             case "/editUser":
                 handleEditUserServlet(request, response);
                 break;
+            case "/buyItems":
+                handleBuyItems(request,response);
+                break;
             default:break;
         }
 
@@ -86,6 +89,13 @@ public class ControllerServlet extends HttpServlet {
             Item item = ItemHandler.getItemByID(itemId);
             user.getShoppingcart().addItems(item,1);
             System.out.println(user.getShoppingcart().toString());
+        }
+    }
+    private void handleBuyItems(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        User user = getUserSession(request);
+        if (user != null) {
+
+            user.getShoppingcart().emptyCart();
         }
     }
 
