@@ -2,10 +2,7 @@ package com.example.Dist_sys_lab1_webshop.Database;
 
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,17 +37,18 @@ public class ItemDB extends Item {
 	public static Item getDBItemByID(int idInput) {
 		Connection con = DBManager.getConnection();
 		Item item = null;
-		try {
-			Statement statement = con.createStatement();
-			String query = "SELECT * from item WHERE ID="+idInput; //TODO: ej säkert mot SQL-injection. Gör som Emil gjorde i UserDB.getUserFromDB med prepared statement
-			ResultSet resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
-				int id = resultSet.getInt("id");
-				String name = resultSet.getString("name");
-				String description = resultSet.getString("description");
-				double price = resultSet.getDouble("price");
-				int quantity = resultSet.getInt("quantity");
-				item = new ItemDB(id, name, description, price, quantity);
+		String sql = "SELECT * from item WHERE ID= ?";
+		try (PreparedStatement statement = con.prepareStatement(sql)) {
+			statement.setInt(1, idInput);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					String name = resultSet.getString("name");
+					String description = resultSet.getString("description");
+					double price = resultSet.getDouble("price");
+					int quantity = resultSet.getInt("quantity");
+					item = new ItemDB(id, name, description, price, quantity);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
