@@ -15,9 +15,6 @@
 </div>
 <div class="main-content">
 <br>
-<br>
-<br>
-<br>
 <h3>Köp Hatt</h3>
 <br>
 <img src="images/transp_hat.png" alt="viktoriansk hatt 1000 kr" width="198" height="150">
@@ -27,25 +24,15 @@
         <input type="submit" value="Här finns en hatt">
     </form>
 <br>
-
     <form method="post" action="wares">
         <input type="hidden" name="action" value="remove">
         <input type="submit" value="Här är lagret">
     </form>
-
-
 <br>
-    <br>
-
     <form method="post" action="shoppingBasket">
         <input type="hidden" name="action" value="remove">
         <input type="submit" value="Shopping basket">
     </form>
-
-
-
-
-<br>
 <br>
     <div class="container">
         <form method= "post" action="login">
