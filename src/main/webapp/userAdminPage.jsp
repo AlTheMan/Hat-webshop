@@ -57,7 +57,7 @@
     <td><%=users.get(i).getPrivilege()%></td>
     <td><%=users.get(i).getEmail()%></td>
     <td>
-      <form method="post" action="editUser">
+      <form>
         <!-- Use a hidden input field to capture the user ID -->
         <input type="hidden" name="userId" value="<%= users.get(i).getId() %>">
         <input type="submit" value="Manage">
@@ -67,15 +67,25 @@
   <%}%>
 </table>
 
-<%
-if(userToEdit != null) { %>
+
+<br>User ID to manage:
+<% String id = request.getParameter("userId");
+  if (id == null)  { %> Please select ID
+<% } else { %> <%=id%> <%}%>
 
 <form method="post" action="editUser">
-  User ID to manage: <%=userToEdit.getId()%>
-  <label><input type="text" name="username" ></label>
+  <%--@declare id="dropdown"--%><br> <label for="dropdown">Update privilege:</label>
+    <input name="userId" type="hidden" value=<%=id%>>
+  <select id="dropdown" name="privilege">
+  <option value="STAFF">Staff</option>
+  <option value="CUSTOMER">Customer</option></select>
+    <br><br><label>Update email: <input type="text" value="" name="emailName"></label>
+  <br><br><input type="submit" value="submit" name="submitName">
+  <input type="submit" value="delete" name="deleteName">
+
 </form>
 
-<%}%>
+
 
 </body>
 </html>

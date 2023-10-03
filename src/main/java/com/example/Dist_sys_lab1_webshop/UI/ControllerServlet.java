@@ -1,6 +1,8 @@
 package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
+import java.util.Enumeration;
+
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
@@ -99,11 +101,15 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void handleEditUserServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleEditUserServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         System.out.println("EditUsers");
-        System.out.println(request.getParameter("userToEdit"));
-        response.sendRedirect("editUserPage.jsp");
+        var strings = request.getParameterNames();
+        while (strings.hasMoreElements()) {
+            System.out.println(request.getParameter(strings.nextElement()));
+        }
+
+        handleAdminServlet(request, response);
 
     }
 
