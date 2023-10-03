@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.User" %><%--
   Created by IntelliJ IDEA.
   User: emilw
   Date: 2023-10-03
@@ -8,30 +9,60 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <style>
+      #users {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #users td, #users th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #users tr:nth-child(even){background-color: #f2f2f2;}
+
+      #users tr:hover {background-color: #ddd;}
+
+      #users th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+      }
+    </style>
 </head>
 <body>
 
 <h1>User table</h1>
-<div class="table">
-<table>
+<table id="users">
+  <%
+
+    @SuppressWarnings("unchecked")
+    ArrayList<User> users = (ArrayList<User>) request.getAttribute("users"); %>
   <tr>
-    <th>Header 1: adasdas</th>
-    <th>Header 2</th>
-    <th>Header 3</th>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Privilege</th>
+    <th>Email</th>
   </tr>
+  <% for (User u : users) {%>
   <tr>
-    <td>Data 1</td>
-    <td>Data 2</td>
-    <td>Data 3</td>
+    <td><%=u.getId()%></td>
+    <td><%=u.getUserName()%></td>
+    <td><%=u.getPrivilege()%></td>
+    <td><%=u.getEmail()%></td>
   </tr>
-  <tr>
-    <td>Data 4</td>
-    <td>Data 5</td>
-    <td>Data 6</td>
-  </tr>
+  <%}%>
 </table>
-</div>
+
+
+<form method="post" action="hatPage">
+  ID: <label><input type="number" name="user_id" max="<%=users.size()%>" min="0"></label>
+
+</form>
 
 </body>
 </html>
