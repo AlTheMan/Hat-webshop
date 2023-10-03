@@ -1,6 +1,7 @@
 package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Enumeration;
 
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
@@ -30,7 +31,8 @@ import jakarta.servlet.annotation.*;
         "/login",
         "/userAdmin",
         "/addItemToShoppingCart",
-        "/editUser"})
+        "/editUser",
+        "/buyItems"})
 
 public class ControllerServlet extends HttpServlet {
     private final static String READONLYUSER = "distlab1user";
@@ -89,13 +91,22 @@ public class ControllerServlet extends HttpServlet {
             Item item = ItemHandler.getItemByID(itemId);
             user.getShoppingcart().addItems(item,1);
             System.out.println(user.getShoppingcart().toString());
+            //System.out.println("nr of items in index 0: "+user.getShoppingcart().getItems().get(0).getNrOfItems());
         }
     }
     private void handleBuyItems(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
+            try{
+                if(UserHandler.buyItems(user.getShoppingcart())){
+                    user.getShoppingcart().emptyCart();
+                    System.out.println("Purchase was sucessful!");
+                }
+            } catch (SQLException e) {
+                System.out.println("Purchase was not successful");
+                //throw new RuntimeException(e);
+            }
 
-            user.getShoppingcart().emptyCart();
         }
     }
 

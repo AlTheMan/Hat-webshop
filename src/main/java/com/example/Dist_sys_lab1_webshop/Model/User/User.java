@@ -1,7 +1,9 @@
 package com.example.Dist_sys_lab1_webshop.Model.User;
 
+import com.example.Dist_sys_lab1_webshop.Database.ItemDB;
 import com.example.Dist_sys_lab1_webshop.Database.UserDB;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class User {
@@ -73,6 +75,9 @@ public class User {
 	}
 	public Shoppingcart getShoppingcart(){
 		return shoppingcart;
+	}
+	public static boolean buyItems(Shoppingcart shoppingcart) throws SQLException {
+		return ItemDB.removeQuantityDBItemByID(shoppingcart);
 	}
 
 	public String getEmail() {

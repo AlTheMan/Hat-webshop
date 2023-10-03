@@ -41,7 +41,7 @@
     <% } %>
 
 </table>
-<form action="buyItems" method="post">
+<form method="post" action="buyItems">
     <input type="submit" value="Purchase">
 </form>
 </body>
