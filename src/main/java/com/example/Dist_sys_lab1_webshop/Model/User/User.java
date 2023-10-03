@@ -34,6 +34,10 @@ public class User {
 
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public Privilege getPrivilege() {
 		return privilege;
 	}
