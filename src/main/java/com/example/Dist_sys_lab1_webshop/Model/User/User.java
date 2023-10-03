@@ -58,6 +58,18 @@ public class User {
 		return UserDB.getAllUsersFromDB();
 	}
 
+	protected static void updateUserInDB(int userId, String privilege, String email) {
+		UserDB.updateUserInDB(userId, privilege, email);
+	}
+
+	protected static void deleteUserFromDB(int userId) {
+		UserDB.deleteUserFromDB(userId);
+	}
+
+
+
+
+
 	public static User getUserFromDB(String userName, String password){
 		User dbUser = UserDB.getUserFromDB(userName, password);
 

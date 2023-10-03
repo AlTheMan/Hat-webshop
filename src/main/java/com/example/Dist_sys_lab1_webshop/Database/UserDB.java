@@ -67,4 +67,52 @@ public class UserDB extends User {
 		return user;
 	}
 
+	public static void deleteUserFromDB(int userId){
+		con = DBManager.getConnection();
+		String sql = "DELETE FROM user where user_id = ?";
+		try (PreparedStatement statement = con.prepareStatement(sql)){
+			statement.setInt(1, userId);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void updateUserInDB(int userId, String privilege, String email) {
+		String sql;
+		con = DBManager.getConnection();
+
+		try  {
+			PreparedStatement statement = null;
+			if (email.compareTo("") != 0 && privilege.compareTo("NOVALUE") != 0) {
+				sql = "UPDATE user SET email = ?, privilege = ? WHERE user_id = ?";
+				statement = con.prepareStatement(sql);
+				statement.setString(1, email);
+				statement.setString(2, privilege);
+				statement.setInt(3, userId);
+			} else if (email.compareTo("") != 0) {
+				sql = "UPDATE user SET email = ? WHERE user_id = ?";
+				statement = con.prepareStatement(sql);
+				statement.setString(1, email);
+				statement.setInt(2, userId);
+			} else if (privilege.compareTo("NOVALUE") != 0) {
+				sql = "UPDATE user SET privilege = ? WHERE user_id = ?";
+				statement = con.prepareStatement(sql);
+				statement.setString(1, privilege);
+				statement.setInt(2, userId);
+			}
+
+			if (statement != null)
+				statement.executeUpdate();
+
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
 }

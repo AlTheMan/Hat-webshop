@@ -27,11 +27,15 @@ public class DBManager {
 
 	}
 
+	public static String getCurrentUser(){
+		return currentUser;
+	}
+
 	public static void setInitUser() {
 		currentUser = "distlab1user";
 	}
 
-	protected static void setUserPrivilege(Privilege privilege) {
+	protected static void setUserPrivilege(Privilege privilege)  {
 		String loginUser;
 		switch (privilege){
 			case ADMIN: loginUser = "distlab1admin"; break;
@@ -41,6 +45,12 @@ public class DBManager {
 		}
 		System.out.println(privilege + " " + loginUser);
 		currentUser = loginUser;
+		try {
+			connection.close();
+			connection = DriverManager.getConnection(url, currentUser, passw);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 
