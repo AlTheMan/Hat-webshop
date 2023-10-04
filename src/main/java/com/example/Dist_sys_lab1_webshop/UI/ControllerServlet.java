@@ -41,7 +41,10 @@ public class ControllerServlet extends HttpServlet {
     private final static String USERID = "userId";
 
     public void init() {
+
         DBManager.setInitUser(); //initerar användaren till read-only
+        //request.setAttribute("items", ItemHandler.getAllItems());
+        //request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     @Override
@@ -78,8 +81,10 @@ public class ControllerServlet extends HttpServlet {
                 break;
             default:break;
         }
+    }
 
-
+    public static void getInitUsers(HttpServletRequest request){
+        request.setAttribute("items", ItemHandler.getAllItems());
     }
 
     private void handleAddItemToShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

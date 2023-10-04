@@ -1,4 +1,7 @@
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.User" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.UI.ControllerServlet" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -9,15 +12,38 @@
 </head>
 <body>
 
+
+
 <br/>
 <div class="header">
     <h1><%= "Hattshopp" %> </h1>
 </div>
 <div class="main-content">
+    <%
 
-<br>
-<h3>Köp Hatt</h3>
-<br>
+        ControllerServlet.getInitUsers(request);
+
+        @SuppressWarnings("unchecked")
+        ArrayList<Item> shopItems = (ArrayList<Item>) request.getAttribute("items");
+
+
+    %>
+    <div class="grid-container">
+        <% for (Item item : shopItems) { %>
+        <div class="item-card">
+            <img src="images/hat/<%= item.getImagesrc() %>" alt="<%= item.getName() %> Image">
+            <h3><%= item.getName() %></h3>
+            <p><%= item.getDescription() %></p>
+            <p>Price: <%= item.getPrice() %></p>
+            <p>Quantity: <%= item.getQuantity() %></p>
+        </div>
+        <% } %>
+    </div>
+
+    <br>
+    <br>
+
+
 <img src="images/hat/transp_hat.png" alt="viktoriansk hatt 1000 kr" width="198" height="150">
 
     <br>
