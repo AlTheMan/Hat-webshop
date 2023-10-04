@@ -17,7 +17,10 @@
 
 <br/>
 <div class="header">
-    <h1><%= "Hattshopp" %> </h1>
+    <h1>
+        <img src="images/hat/victoriantophat.jpg" alt="HatImage" width="30px">
+        <%= "Hattshopp" %>
+    </h1>
 </div>
 <div class="main-content">
     <%
