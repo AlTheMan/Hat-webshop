@@ -10,6 +10,7 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="css/userAdmin.css">
+  <title></title>
 </head>
 <body>
 
@@ -20,7 +21,7 @@
 
     @SuppressWarnings("unchecked")
     ArrayList<User> users = (ArrayList<User>) request.getAttribute("users");
-    User userToEdit = null; %>
+  %>
   <tr>
     <th>ID</th>
     <th>Username</th>
@@ -53,9 +54,10 @@
   <% String id = request.getParameter("userId");
     if (id == null)  { %> Please select ID
   <% } else { %> <%=id%> <%}%> </h3>
-<form method="post" action="editUser">
+<form method="post" action="userAdmin">
   <%--@declare id="dropdown"--%><label for="dropdown">Update privilege:</label>
     <input name="userId" type="hidden" value=<%=id%>>
+    <input name="action" type="hidden" value="editUser">
   <select id="dropdown" name="userPrivilege">
     <option value="NOVALUE"><------></option>
     <option value="ADMIN">Admin</option>

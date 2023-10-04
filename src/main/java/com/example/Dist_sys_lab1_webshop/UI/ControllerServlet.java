@@ -2,13 +2,12 @@ package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
 import java.sql.SQLException;
-import java.util.Enumeration;
+import java.util.HashMap;
 
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
-import com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
 import jakarta.servlet.ServletException;
@@ -31,9 +30,10 @@ import jakarta.servlet.annotation.*;
         "/login",
         "/userAdmin",
         "/addItemToShoppingCart",
-        "/editUser",
         "/buyItems",
         "/removeItemFromShoppingCart"})
+
+
 
 public class ControllerServlet extends HttpServlet {
     private final static String READONLYUSER = "distlab1user";
@@ -71,9 +71,6 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "/addItemToShoppingCart":
                 handleAddItemToShoppingCart(request,response);
-                break;
-            case "/editUser":
-                handleEditUserServlet(request, response);
                 break;
             case "/buyItems":
                 handleBuyItems(request,response);
@@ -142,6 +139,15 @@ public class ControllerServlet extends HttpServlet {
 
 
     private void handleAdminServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String action = request.getParameter("action");
+
+        if (action != null){
+            System.out.println(action);
+            if (action.compareTo("editUser") == 0) {
+                editUser(request);
+            }
+        }
+
         User user = getUserSession(request);
         if (user != null) {
             if (user.getPrivilege() == Privilege.ADMIN){
@@ -151,16 +157,18 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void handleEditUserServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void editUser(HttpServletRequest request) throws IOException, ServletException {
 
         System.out.println("EditUsers");
+        HashMap<String, String> values = new HashMap<>();
         var strings = request.getParameterNames();
         while (strings.hasMoreElements()) {
-            System.out.println(request.getParameter(strings.nextElement()));
+            String name = strings.nextElement();
+            String value = request.getParameter(name);
+            System.out.println("Name: " + name + ", Value: " + value);
+            values.put(name, value);
         }
-
-        handleAdminServlet(request, response);
-
+        UserHandler.updateUser(values);
     }
 
     private void handleLoginServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
