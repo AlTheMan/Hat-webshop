@@ -2,6 +2,7 @@
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.UI.ControllerServlet" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.Privilege" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -72,9 +73,24 @@
     </form>
     <br>
     <br>
+
+    <% User user = (User) session.getAttribute("user");
+	if (user != null) {
+        System.out.println(user.getPrivilege());
+		if (user.getPrivilege() == Privilege.ADMIN) { %>
     <form method="post" action="userAdmin">
-        <input type="submit" value="Handle users">
+        <input type="submit" value="Manage users">
     </form>
+    <form method="post" action="itemAdmin">
+        <input type="submit" value="Manage items">
+    </form>
+       <% }
+    }
+    %>
+
+
+
+
     <br>
     <div class="container">
         <form method= "post" action="login">
@@ -85,7 +101,7 @@
     </div>
 </div>
 <div class ="footer">
-    <% User user = (User) session.getAttribute("user");
+    <% user = (User) session.getAttribute("user");
      if (user != null) { %>
     <p> Logged in as: <%= user.getUserName()%>!</p>
     <%}%>

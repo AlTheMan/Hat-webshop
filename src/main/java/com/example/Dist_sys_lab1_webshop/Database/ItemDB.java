@@ -7,8 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 
-import static com.example.Dist_sys_lab1_webshop.Database.DBManager.connection;
 
 public class ItemDB extends Item {
 
@@ -66,7 +66,7 @@ public class ItemDB extends Item {
 		String sql = "UPDATE item SET quantity = quantity - ? WHERE id = ?;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			connection.setAutoCommit(false);  // Start transaction
+			con.setAutoCommit(false);  // Start transaction
 			for(int i=0; i<shoppingcart.getItems().size(); i++){
 				//int quantity = shoppingcart.getItems().get(i).getNrOfItems();
 				//int id = shoppingcart.getItems().get(i).getItem().getId();
@@ -82,13 +82,91 @@ public class ItemDB extends Item {
 			}
 
 
-			connection.commit();  // Commit the transaction
+			con.commit();  // Commit the transaction
 		}
 		finally {
-			connection.setAutoCommit(true);  // End the transaction and set the connection back to default mode
+			con.setAutoCommit(true);  // End the transaction and set the connection back to default mode
 		}
 		return true; //Kolla om detta returnerar true endast vid success.
 	}
 
+//TODO: denna behöver kanske skrivas om
+	public static void updateItemById(int id, HashMap<String, String> values)  {
+		Connection con = DBManager.getConnection();
+		String baseSQL = "UPDATE item SET";
+		try {
+			con.setAutoCommit(false);
+			Statement statement = con.createStatement();
+
+			if (values.containsKey("itemName")) {
+				statement.executeUpdate(baseSQL + " name = '" +
+						values.get("itemName") + "' WHERE id = " + id);
+			}
+			if (values.containsKey("descriptionName")) {
+				statement.executeUpdate(baseSQL + " description = '" +
+						values.get("descriptionName") + "' WHERE id = " + id);
+			}
+			if(values.containsKey("itemPrice")) {
+				statement.executeUpdate(baseSQL + " price = " +
+						values.get("itemPrice") + " WHERE id = " + id);
+			}
+			if (values.containsKey("itemQuantity")) {
+				statement.executeUpdate(baseSQL + " quantity = " +
+						values.get("itemQuantity") + " WHERE id = " + id);
+			}
+			if (values.containsKey("itemIMG")) {
+				statement.executeUpdate(baseSQL + " imagesrc = '" +
+						values.get("itemIMG") + "' WHERE id = " + id);
+			}
+
+			con.commit();
+		} catch (SQLException e){
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public static void addItemToDB(Item item) {
+		Connection connection = DBManager.getConnection();
+
+		String sql = "INSERT INTO item (name, description, price, quantity, imagesrc) " +
+				"VALUES (?, ?, ?, ?, ?)";
+
+		try(PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setString(1, item.getName());
+			statement.setString(2, item.getDescription());
+			statement.setDouble(3, item.getPrice());
+			statement.setInt(4, item.getQuantity());
+			statement.setString(5, item.getImagesrc());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+	public static void removeItemById(int id) {
+		Connection connection = DBManager.getConnection();
+		String sql = "DELETE from item where id = ?";
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

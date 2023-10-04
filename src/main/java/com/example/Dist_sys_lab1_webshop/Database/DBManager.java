@@ -12,7 +12,7 @@ public class DBManager {
 	private static String  url = "jdbc:mysql://localhost:3306/dist1";
 	private static String currentUser = "distlab1user";
 	private static String passw = "1234";
-	static Connection connection;
+	private static Connection connection;
 	public static Connection getConnection() {
 		if (connection != null) {
 			return connection;

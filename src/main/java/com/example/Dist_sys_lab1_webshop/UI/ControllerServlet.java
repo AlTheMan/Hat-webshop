@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
+import com.example.Dist_sys_lab1_webshop.Model.Item.ImageHelper;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
@@ -30,6 +31,7 @@ import jakarta.servlet.annotation.*;
         "/hatPage",
         "/login",
         "/userAdmin",
+        "/itemAdmin",
         "/addItemToShoppingCart",
         "/buyItems",
         "/removeItemFromShoppingCart"})
@@ -69,6 +71,8 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "/userAdmin":
                 handleAdminServlet(request, response);
+                break;
+            case "/itemAdmin": handleItemAdmin(request, response);
                 break;
             case "/addItemToShoppingCart":
                 handleAddItemToShoppingCart(request,response);
@@ -149,16 +153,9 @@ public class ControllerServlet extends HttpServlet {
                 case "addUser": addUser(request); break;
                 case "editUser": editUser(request); break;
                 case "deleteUser": deleteUser(request); break;
-
-
-
-
                 default: break;
             }
-
-
         }
-
         User user = getUserSession(request);
         if (user != null) {
             if (user.getPrivilege() == Privilege.ADMIN){
@@ -167,8 +164,6 @@ public class ControllerServlet extends HttpServlet {
             }
         }
     }
-
-
     private void addUser(HttpServletRequest request){
         System.out.println("Add user");
         HashMap<String, String> values = new HashMap<>();
@@ -179,19 +174,10 @@ public class ControllerServlet extends HttpServlet {
             System.out.println(name + " " + value);
             values.put(name, value);
         }
-
         for (String v : values.values()){ // tittar att inga fält är tomma
             if (v.compareTo("") == 0) return;
         }
-
         UserHandler.addUser(values);
-
-        /*String username = request.getParameter("username");
-        String privilege = request.getParameter("userPrivilege");
-        String email = request.getParameter("email");*/
-
-
-
     }
 
 
@@ -206,22 +192,12 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void editUser(HttpServletRequest request) {
-        System.out.println("EditUsers");
-
         String id = request.getParameter(USERID);
         if (id == null) {
             System.out.println("id was null");
             return;
         }
-
-        HashMap<String, String> values = new HashMap<>();
-        Enumeration<String> strings = request.getParameterNames();
-        while (strings.hasMoreElements()) {
-            String name = strings.nextElement();
-            String value = request.getParameter(name);
-            System.out.println("Name: " + name + ", Value: " + value);
-            values.put(name, value);
-        }
+        HashMap<String, String> values = mapAllParameterValues(request);
         UserHandler.updateUser(values);
     }
 
@@ -236,6 +212,59 @@ public class ControllerServlet extends HttpServlet {
         response.sendRedirect("index.jsp");
     }
 
+
+    private void handleItemAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Handle Item");
+        String action = request.getParameter("action");
+        System.out.println(action);
+        if (action != null) {
+            switch (action) {
+                case "updateItem": updateItem(request); break;
+                case "addItem": addItem(request); break;
+                case "removeItem": removeItem(request); break;
+                default: break;
+            }
+        }
+
+        if (checkAdmin(getUserSession(request))) {
+            request.setAttribute("images", ImageHelper.getImageNames());
+            request.setAttribute("items", ItemHandler.getAllItems());
+            request.getRequestDispatcher("itemAdminPage.jsp").forward(request, response);
+       }
+    }
+
+    private void updateItem(HttpServletRequest request) { //TODO: skriv om till en klass i itemhandler
+        HashMap<String, String> values = new HashMap<>();
+        Enumeration<String> paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements()) {
+            String name = paramNames.nextElement();
+            String value = request.getParameter(name);
+            if (!value.isEmpty())
+                values.put(name, value);
+        }
+        ItemHandler.updateItem(values);
+    }
+
+    private void addItem(HttpServletRequest request) {
+        HashMap<String, String> values = mapAllParameterValues(request);
+        for (String value : values.values()) {
+            if (value.isEmpty()) return;
+        }
+
+        ItemHandler.addItem(values);
+
+    }
+
+    private void removeItem(HttpServletRequest request) {
+        String stringId = request.getParameter("itemId");
+        if (stringId == null) return;
+        int id = Integer.parseInt(stringId);
+        ItemHandler.removeItem(id);
+    }
+
+
+
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
        doPost(request, response);
     }
@@ -246,6 +275,29 @@ public class ControllerServlet extends HttpServlet {
     private User getUserSession(HttpServletRequest request){
         HttpSession session = request.getSession();
         return (User) session.getAttribute("user");
+    }
+
+
+    private boolean checkAdmin(User user) {
+        if (user == null) return false;
+        if (user.getPrivilege() != Privilege.ADMIN) return false;
+        return true;
+    }
+
+    /**
+     *
+     * @param request the incoming servlet request
+     * @return a hashmap with parameter names mapped to values
+     */
+    private HashMap<String, String> mapAllParameterValues(HttpServletRequest request) {
+        HashMap<String, String> values = new HashMap<>();
+        Enumeration<String> strings = request.getParameterNames();
+        while (strings.hasMoreElements()) {
+            String name = strings.nextElement();
+            String value = request.getParameter(name);
+            values.put(name, value);
+        }
+        return values;
     }
 
 }
