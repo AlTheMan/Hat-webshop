@@ -31,11 +31,13 @@ public class Shoppingcart {
 
     }
     public void removeItems(Item item, int nrOfItemsToRemove) {
-        int index = items.indexOf(item);
-        if(index!=-1){                  //found matching object
-            int newNrOfItems = items.get(index).getNrOfItems() - nrOfItemsToRemove;
-            if(newNrOfItems<0) newNrOfItems=0;
-            items.set(index,new ShoppingItem(item,newNrOfItems));
+        for(int i =0; i<items.size(); i++){
+            if(items.get(i).getItem().getId()==item.getId()){ //if item already exist, just increment the nrofitems of that item
+                int newNrOfItems = items.get(i).getNrOfItems() - nrOfItemsToRemove;
+                if(newNrOfItems<0) newNrOfItems=0;
+                items.set(i,new ShoppingItem(item,newNrOfItems));
+                return;
+            }
         }
     }
 

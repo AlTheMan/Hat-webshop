@@ -32,7 +32,8 @@ import jakarta.servlet.annotation.*;
         "/userAdmin",
         "/addItemToShoppingCart",
         "/editUser",
-        "/buyItems"})
+        "/buyItems",
+        "/removeItemFromShoppingCart"})
 
 public class ControllerServlet extends HttpServlet {
     private final static String READONLYUSER = "distlab1user";
@@ -77,6 +78,9 @@ public class ControllerServlet extends HttpServlet {
             case "/buyItems":
                 handleBuyItems(request,response);
                 break;
+            case "/removeItemFromShoppingCart":
+                handleRemoveItemFromShoppingCart(request,response);
+                break;
             default:break;
         }
 
@@ -90,6 +94,22 @@ public class ControllerServlet extends HttpServlet {
             int itemId = Integer.parseInt(stringItemId);
             Item item = ItemHandler.getItemByID(itemId);
             user.getShoppingcart().addItems(item,1);
+            System.out.println(user.getShoppingcart().toString());
+            //System.out.println("nr of items in index 0: "+user.getShoppingcart().getItems().get(0).getNrOfItems());
+        }
+        // After adding the item, redirect back to itemPage.jsp
+        request.setAttribute("items", ItemHandler.getAllItems());
+        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
+
+    }
+
+    private void handleRemoveItemFromShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        User user = getUserSession(request);
+        if (user != null) {
+            String stringItemId = request.getParameter("itemId");
+            int itemId = Integer.parseInt(stringItemId);
+            Item item = ItemHandler.getItemByID(itemId);
+            user.getShoppingcart().removeItems(item,1);
             System.out.println(user.getShoppingcart().toString());
             //System.out.println("nr of items in index 0: "+user.getShoppingcart().getItems().get(0).getNrOfItems());
         }

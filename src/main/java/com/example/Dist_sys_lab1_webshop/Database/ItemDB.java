@@ -20,7 +20,6 @@ public class ItemDB extends Item {
 		Connection con = DBManager.getConnection();
 		Collection<Item> itemCollection = new ArrayList<>();
 		try {
-
 			Statement statement = con.createStatement();
 			String query = "SELECT * from item";
 			ResultSet resultSet = statement.executeQuery(query);

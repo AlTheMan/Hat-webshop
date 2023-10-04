@@ -36,6 +36,10 @@
             <input type="hidden" name="itemId" value="<%= item.getId() %>">
             <input type="submit" value="+">
         </form>
+        <form action="removeItemFromShoppingCart" method="post">
+            <input type="hidden" name="itemId" value="<%= item.getId() %>">
+            <input type="submit" value="-">
+        </form>
 
     </tr>
     <% } %>
