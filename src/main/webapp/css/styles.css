@@ -64,3 +64,31 @@ a:hover {
     background-color: #007BFF;
     color: #fff;
 }
+
+
+/* Simple grid styling */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 10px; /* Spacing between images */
+}
+.image-cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img {
+    width: 50px;
+    max-width: 100px;
+   /* max-width: 100%; /* Ensuring the images don't overflow their container */
+    height: 50px;
+}
+
+.image-row {
+    display: flex;
+    flex-wrap: nowrap; /* Avoid wrapping to next line */
+    overflow-x: auto; /* Add scrollbar if necessary */
+    gap: 400px; /* Spacing between images */
+}
