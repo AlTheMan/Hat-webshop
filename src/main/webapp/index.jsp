@@ -18,7 +18,7 @@
 <br>
 <h3>Köp Hatt</h3>
 <br>
-<img src="images/transp_hat.png" alt="viktoriansk hatt 1000 kr" width="198" height="150">
+<img src="images/hat/transp_hat.png" alt="viktoriansk hatt 1000 kr" width="198" height="150">
 
     <br>
     <p>Button has been clicked: <%= request.getAttribute("count") %> times.</p>
