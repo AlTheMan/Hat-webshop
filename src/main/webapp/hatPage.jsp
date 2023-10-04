@@ -14,7 +14,7 @@
 <body>
 <a>Köp en hatt</a>
 <br>
-<img src="images/victoriantophat.jpg" alt="viktoriansk hatt 1000 kr" width="150" height="150">
+<img src="images/hat/victoriantophat.jpg" alt="viktoriansk hatt 1000 kr" width="150" height="150">
 
 <%
     // Vet inte hur man kan se hur en session har en user satt eller inte
