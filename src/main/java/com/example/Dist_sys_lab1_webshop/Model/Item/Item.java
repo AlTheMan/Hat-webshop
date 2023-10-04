@@ -11,14 +11,16 @@ public class Item {
 	private String description;
 	private double price;
 	private int quantity;
+	private String imagesrc;
 
 
-	protected Item(int id, String name, String description, double price, int quantity) {
+	protected Item(int id, String name, String description, double price, int quantity, String imagesrc) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
+		this.imagesrc=imagesrc;
 	}
 
 	public static Collection<Item> getDBItemsWithCategory(String category) throws NoSuchMethodException {
@@ -49,5 +51,9 @@ public class Item {
 
 	public int getQuantity() {
 		return quantity;
+	}
+
+	public String getImagesrc() {
+		return imagesrc;
 	}
 }

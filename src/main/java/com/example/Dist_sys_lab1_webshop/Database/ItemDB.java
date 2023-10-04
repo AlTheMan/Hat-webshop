@@ -12,8 +12,8 @@ import static com.example.Dist_sys_lab1_webshop.Database.DBManager.connection;
 
 public class ItemDB extends Item {
 
-	private ItemDB(int id, String name, String description, double price, int quantity) {
-		super(id, name, description, price, quantity);
+	private ItemDB(int id, String name, String description, double price, int quantity, String imagesrc) {
+		super(id, name, description, price, quantity, imagesrc);
 	}
 
 	public static Collection<Item> getDBItemsAll() {
@@ -29,7 +29,8 @@ public class ItemDB extends Item {
 				String description = resultSet.getString("description");
 				double price = resultSet.getDouble("price");
 				int quantity = resultSet.getInt("quantity");
-				itemCollection.add(new ItemDB(id, name, description, price, quantity));
+				String imagesrc = resultSet.getString("imagesrc");
+				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,7 +50,8 @@ public class ItemDB extends Item {
 					String description = resultSet.getString("description");
 					double price = resultSet.getDouble("price");
 					int quantity = resultSet.getInt("quantity");
-					item = new ItemDB(id, name, description, price, quantity);
+					String imagesrc = resultSet.getString("imagesrc");
+					item = new ItemDB(id, name, description, price, quantity, imagesrc);
 				}
 			}
 		} catch (SQLException e) {
