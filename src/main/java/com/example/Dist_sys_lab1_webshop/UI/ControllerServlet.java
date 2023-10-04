@@ -2,6 +2,7 @@ package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 import com.example.Dist_sys_lab1_webshop.Database.DBManager;
@@ -36,13 +37,10 @@ import jakarta.servlet.annotation.*;
 
 
 public class ControllerServlet extends HttpServlet {
-    private final static String READONLYUSER = "distlab1user";
-    private String message;
-    private String message_buy_item;
+
+    private final static String USERID = "userId";
 
     public void init() {
-        message = "Hello World!";
-        message_buy_item="Successfully bought item";
         DBManager.setInitUser(); //initerar användaren till read-only
     }
 
@@ -140,12 +138,20 @@ public class ControllerServlet extends HttpServlet {
 
     private void handleAdminServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
-
         if (action != null){
             System.out.println(action);
-            if (action.compareTo("editUser") == 0) {
-                editUser(request);
+            switch (action) {
+                case "addUser": addUser(request); break;
+                case "editUser": editUser(request); break;
+                case "deleteUser": deleteUser(request); break;
+
+
+
+
+                default: break;
             }
+
+
         }
 
         User user = getUserSession(request);
@@ -157,11 +163,54 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void editUser(HttpServletRequest request) throws IOException, ServletException {
 
-        System.out.println("EditUsers");
+    private void addUser(HttpServletRequest request){
+        System.out.println("Add user");
         HashMap<String, String> values = new HashMap<>();
-        var strings = request.getParameterNames();
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()){
+            String name = parameterNames.nextElement();
+            String value = request.getParameter(name);
+            System.out.println(name + " " + value);
+            values.put(name, value);
+        }
+
+        for (String v : values.values()){ // tittar att inga fält är tomma
+            if (v.compareTo("") == 0) return;
+        }
+
+        UserHandler.addUser(values);
+
+        /*String username = request.getParameter("username");
+        String privilege = request.getParameter("userPrivilege");
+        String email = request.getParameter("email");*/
+
+
+
+    }
+
+
+    private void deleteUser(HttpServletRequest request) {
+        System.out.println("Delete User");
+        String id = request.getParameter(USERID);
+        if (id == null) {
+            System.out.println("id was null");
+            return;
+        }
+        UserHandler.deleteUser(Integer.parseInt(id));
+    }
+
+    private void editUser(HttpServletRequest request) {
+        System.out.println("EditUsers");
+
+        String id = request.getParameter(USERID);
+        if (id == null) {
+            System.out.println("id was null");
+            return;
+        }
+
+        HashMap<String, String> values = new HashMap<>();
+        Enumeration<String> strings = request.getParameterNames();
         while (strings.hasMoreElements()) {
             String name = strings.nextElement();
             String value = request.getParameter(name);

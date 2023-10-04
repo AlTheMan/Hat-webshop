@@ -62,6 +62,10 @@ public class User {
 		UserDB.updateUserInDB(userId, privilege, email);
 	}
 
+	protected static void addUserToDB(String username, String password, String privilege, String email){
+		UserDB.addUserToDB(username, password, privilege, email);
+	}
+
 	protected static void deleteUserFromDB(int userId) {
 		UserDB.deleteUserFromDB(userId);
 	}

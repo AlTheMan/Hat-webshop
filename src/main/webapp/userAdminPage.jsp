@@ -64,8 +64,39 @@
   <option value="STAFF">Staff</option>
   <option value="CUSTOMER">Customer</option></select>
     <br><label>Update email: <input type="text" value="" name="userEmail"></label>
-  <br><input type="submit" value="Update User" name="userSubmit"> <input type="submit" value="Delete User" name="userDelete">
+  <br><input type="submit" value="Update User">
 </form>
+
+  <br>
+  <form method="post" action="userAdmin">
+    <input type="hidden" value="deleteUser" name = "action">
+    <input name="userId" type="hidden" value=<%=id%>>
+    <input type="submit" value="Delete User">
+  </form>
+
+
+  <h3>Add user to database</h3>
+
+  <form method="post" action="userAdmin">
+
+    <label>Enter username: <input type="text" name="username" value=""></label>
+    <br>
+    <label>Enter password: <input type="password" name="password" value=""></label>
+
+    <%--@declare id="dropdown"--%><label for="dropdown"><br>Select privilege:</label>
+    <input name="action" type="hidden" value="addUser">
+    <select id="dropdown" name="userPrivilege">
+      <option value="NOVALUE"><------></option>
+      <option value="ADMIN">Admin</option>
+      <option value="STAFF">Staff</option>
+      <option value="CUSTOMER">Customer</option></select>
+    <br><label>Enter email: <input type="text" name="userEmail" value=""></label>
+    <br><input type="submit" value="Add User">
+  </form>
+
+
+
+
 </div>
 
 

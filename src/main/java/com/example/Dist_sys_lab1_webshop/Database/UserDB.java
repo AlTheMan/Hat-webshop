@@ -67,6 +67,26 @@ public class UserDB extends User {
 		return user;
 	}
 
+
+	public static void addUserToDB(String username, String password, String privilege, String email){
+		con = DBManager.getConnection();
+		String sql = "INSERT INTO user (username, password, email, privilege) VALUES (?, ?, ?, ?)";
+
+		try (PreparedStatement statement = con.prepareStatement(sql)) {
+			statement.setString(1, username);
+			statement.setString(2, password);
+			statement.setString(3, email);
+			statement.setString(4, privilege);
+
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+
+	}
+
 	public static void deleteUserFromDB(int userId){
 		con = DBManager.getConnection();
 		String sql = "DELETE FROM user where user_id = ?";

@@ -11,14 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="048291d8-efeb-4832-b27b-fb1476335397" name="Changes" comment="Switch för servlet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat10.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat21.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat22.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat23.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat24.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/hat/hat3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/UserDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Database/UserDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/Model/User/UserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Dist_sys_lab1_webshop/UI/ControllerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/userAdminPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/userAdminPage.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

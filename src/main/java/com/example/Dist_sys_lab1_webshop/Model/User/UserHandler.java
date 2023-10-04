@@ -27,21 +27,24 @@ public class UserHandler {
 		return User.getAllUsersFromDB(); //TODO: ska kopia göras?
 	}
 
+	public static void addUser(HashMap<String, String> values) {
+		User.addUserToDB(
+				values.get("username"),
+				values.get("password"),
+				values.get("userPrivilege"),
+				values.get("userEmail"));
+
+	}
 
 	public static void updateUser(HashMap<String, String> values){
-		String userStringId = values.get("userId");
-		if (userStringId == null) {
-			return;
-		}
-		int userId = Integer.parseInt(userStringId);
+		int userId = Integer.parseInt(values.get("userId"));
+		String privilege = values.get("userPrivilege");
+		String email = values.get("userEmail");
+		User.updateUserInDB(userId, privilege, email);
+	}
 
-		if (values.containsKey("userDelete")) {
-			User.deleteUserFromDB(userId);
-		} else if (values.containsKey("userSubmit")){
-			String privilege = values.get("userPrivilege");
-			String email = values.get("userEmail");
-			User.updateUserInDB(userId, privilege, email);
-		}
+	public static void deleteUser(int id) {
+		User.deleteUserFromDB(id);
 	}
 
 }
