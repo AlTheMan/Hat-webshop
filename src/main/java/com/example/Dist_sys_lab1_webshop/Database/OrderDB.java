@@ -4,10 +4,7 @@ import com.example.Dist_sys_lab1_webshop.Model.Order.Order;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderItem;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -16,33 +13,21 @@ public class OrderDB extends Order {
     public OrderDB(int orderID, ArrayList<OrderItem> orderItems, String customerName, Date orderDate, String shippingaddress, OrderStatus orderStatus) {
         super(orderID, orderItems, customerName, orderDate, shippingaddress, orderStatus);
     }
-    /*
 
-    public static Collection<Order> getDBItemsAll2() {
+    public static void updateStatusOfOrder(OrderStatus orderStatus, Order order) {
         Connection con = DBManager.getConnection();
-        Collection<Order> orderCollection = new ArrayList<>();
-        try {
-            Statement statement = con.createStatement();
-            String query = "SELECT * from orders";
-
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                double price = resultSet.getDouble("price");
-                int quantity = resultSet.getInt("quantity");
-                String imagesrc = resultSet.getString("imagesrc");
-                orderCollection.add(new OrderDB(id, name, description, price, quantity, imagesrc));
-            }
+        String sql = "UPDATE orders SET status = ? WHERE order_id = ?";
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setString(1, orderStatus.toString());
+            statement.setInt(2,order.getOrderID());
+            statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orderCollection;
+        e.printStackTrace();
     }
-    */
+        return;
+    }
 
-    public static Collection<Order> getDBOrdersAll() {
+    public static Collection<Order> getDBOrderAll() {
         Connection con = DBManager.getConnection();
         Collection<Order> orderCollection = new ArrayList<>();
         try {

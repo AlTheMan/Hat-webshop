@@ -1,6 +1,9 @@
 package com.example.Dist_sys_lab1_webshop.Model.Order;
 
+import com.example.Dist_sys_lab1_webshop.Database.OrderDB;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 public class Order {
@@ -26,6 +29,14 @@ public class Order {
 
     public ArrayList<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public static Collection<Order> getDBOrdersAll() {
+        return OrderDB.getDBOrderAll();
+    }
+
+    public static void updateStatusOfOrder(OrderStatus orderStatus, Order order) {
+        OrderDB.updateStatusOfOrder(orderStatus,order);
     }
 
     public String getCustomerName() {
