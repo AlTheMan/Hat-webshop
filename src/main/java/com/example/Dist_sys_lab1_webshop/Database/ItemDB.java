@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class ItemDB extends Item {
 
-	private ItemDB(int id, String name, String description, double price, int quantity, String imagesrc) {
+	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc) {
 		super(id, name, description, price, quantity, imagesrc);
 	}
 

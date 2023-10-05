@@ -1,25 +1,22 @@
-package com.example.Dist_sys_lab1_webshop.Model.Item;
+package com.example.Dist_sys_lab1_webshop.Model.Order;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Orders {
+public class Order {
     private int orderID;
-    private OrderItem orderItem;
+    private ArrayList<OrderItem> orderItems;
     private String customerName;
     private Date orderDate;
     private String shippingaddress;
     private OrderStatus orderStatus;
 
-    public Orders(int orderID, OrderItem orderItem, String customerName, Date orderDate, String shippingaddress, OrderStatus orderStatus) {
+    public Order(int orderID, ArrayList<OrderItem> orderItems, String customerName, Date orderDate, String shippingaddress, OrderStatus orderStatus) {
         this.orderID = orderID;
-        this.orderItem = orderItem;
+        this.orderItems = orderItems;
         this.customerName = customerName;
         this.orderDate = orderDate;
         this.shippingaddress = shippingaddress;
-        this.orderStatus = orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -27,8 +24,8 @@ public class Orders {
         return orderID;
     }
 
-    public OrderItem getOrderItem() {
-        return orderItem;
+    public ArrayList<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public String getCustomerName() {
@@ -45,5 +42,9 @@ public class Orders {
 
     public OrderStatus getOrderStatus() {
         return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

@@ -1,4 +1,6 @@
-package com.example.Dist_sys_lab1_webshop.Model.Item;
+package com.example.Dist_sys_lab1_webshop.Model.Order;
+
+import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 
 public class OrderItem {
     private Item item;
@@ -15,5 +17,12 @@ public class OrderItem {
 
     public int getNrOfItems() {
         return nrOfItems;
+    }
+
+    @Override
+    public String toString() {
+        return "itemName:" + item.getName() +
+                ", itemID:" + item.getId() +
+                ", nrOfItems=" + nrOfItems;
     }
 }
