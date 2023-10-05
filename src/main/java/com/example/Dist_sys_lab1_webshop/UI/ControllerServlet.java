@@ -37,7 +37,8 @@ import jakarta.servlet.annotation.*;
         "/removeItemFromShoppingCartFromIndex",
         "/goToShoppingcart",
         "/addItemToShoppingCartFromShoppingcartPage",
-        "/removeItemFromShoppingCartFromShoppingcartPage"})
+        "/removeItemFromShoppingCartFromShoppingcartPage",
+        "/ordersPage"})
 
 
 
@@ -95,12 +96,21 @@ public class ControllerServlet extends HttpServlet {
             case "/goToShoppingcart":
                 handleGoToShoppingcart(request,response);
                 break;
+            case "/ordersPage":
+                handleOrdersPage(request,response);
+                break;
             default:break;
         }
     }
 
     public static void getInitUsers(HttpServletRequest request){
         request.setAttribute("items", ItemHandler.getAllItems());
+    }
+
+    private void handleOrdersPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        request.setAttribute("users", UserHandler.getAllUsers());
+        request.getRequestDispatcher("orders.jsp").forward(request, response);
     }
 
     private void handleGoToShoppingcart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

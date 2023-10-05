@@ -65,14 +65,11 @@
 <img src="images/hat/transp_hat.png" alt="viktoriansk hatt 1000 kr" width="198" height="150">
 
     <br>
-    <p>Button has been clicked: <%= request.getAttribute("count") %> times.</p>
-    <a href="increaseCounterForItem">Increase Counter!</a>
     <br>
-    <form method="post" action="addItem">
-        <input type="submit" name="action" value="submit">
-        <input type="submit" value="+">
+    <form method="post" action="ordersPage">
+        <input type="hidden" name="action" value="remove">
+        <input type="submit" value="orders">
     </form>
-    <br>
     <br>
     <form method="post" action="hatPage">
         <input type="hidden" name="action" value="remove">
