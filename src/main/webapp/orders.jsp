@@ -18,19 +18,16 @@
 <div class="grid-container">
 
     <% for (Order o : orders) { %>
-    <div class="item-card">
-        <% ArrayList<OrderItem> orderitems = o.getOrderItems();
-            for(OrderItem i: orderitems){ %>
-                <p> <%= i.getItem().getId() %></p>
-                <p> <%= i.getItem().getName() %></p>
-                <p> <%= i.getItem().getPrice() %></p>
-                <img src="images/hat/<%= i.getItem().getImagesrc() %>" alt="<%= i.getItem().getName() %> Image">
-        <%  } %>
+    <div class="item-card-orders">
         <h3><%= o.getOrderID() %></h3>
         <p><%= o.getCustomerName() %></p>
         <p><%= o.getOrderDate() %></p>
         <p><%= o.getOrderStatus() %></p>
         <p><%= o.getShippingaddress() %></p>
+        <% ArrayList<OrderItem> orderitems = o.getOrderItems();
+            for(OrderItem i: orderitems){ %>
+                <p> id: <%= i.getItem().getId() %>, <%= i.getItem().getName() %>, Amount Bought:<%= i.getNrOfItems() %></p>
+        <%  } %>
     </div>
     <% } %>
 </div>
