@@ -60,10 +60,6 @@
 
     <br>
     <br>
-
-
-<img src="images/hat/transp_hat.png" alt="viktoriansk hatt 1000 kr" width="198" height="150">
-
     <br>
     <br>
     <form method="post" action="ordersPage">

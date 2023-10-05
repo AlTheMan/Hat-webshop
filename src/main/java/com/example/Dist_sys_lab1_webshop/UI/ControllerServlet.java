@@ -9,6 +9,7 @@ import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ImageHelper;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
+import com.example.Dist_sys_lab1_webshop.Model.Order.OrderHandler;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
@@ -108,8 +109,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void handleOrdersPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        request.setAttribute("users", UserHandler.getAllUsers());
+        request.setAttribute("orders", OrderHandler.getAllOrders());
         request.getRequestDispatcher("orders.jsp").forward(request, response);
     }
 
