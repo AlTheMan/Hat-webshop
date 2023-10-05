@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.Order.Order" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.Order.OrderItem" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus" %>
 
 <html>
 <head>
@@ -18,22 +19,25 @@
 <div class="grid-container">
 
     <% for (Order o : orders) { %>
-    <div class="item-card-orders">
-        <h3><%= o.getOrderID() %></h3>
-        <p><%= o.getCustomerName() %></p>
-        <p><%= o.getOrderDate() %></p>
-        <p><%= o.getOrderStatus() %></p>
-        <p><%= o.getShippingaddress() %></p>
-        <% ArrayList<OrderItem> orderitems = o.getOrderItems();
-            for(OrderItem i: orderitems){ %>
-                <p> id: <%= i.getItem().getId() %>, <%= i.getItem().getName() %>, Amount Bought:<%= i.getNrOfItems() %></p>
-        <%  } %>
-        <form action="packOrder" method="post">
-            <input type="hidden" name="orderId" value="<%= o.getOrderID() %>">
-            <input type="submit" value="send order">
-        </form>
-    </div>
-    <% } %>
+    <%if (o.getOrderStatus().equals(OrderStatus.PENDING)){ %>
+        <div class="item-card-orders">
+            <h3><%= o.getOrderID() %></h3>
+            <p><%= o.getCustomerName() %></p>
+            <p><%= o.getOrderDate() %></p>
+            <p><%= o.getOrderStatus() %></p>
+            <p><%= o.getShippingaddress() %></p>
+            <% ArrayList<OrderItem> orderitems = o.getOrderItems();
+                for(OrderItem i: orderitems){ %>
+            <p> id: <%= i.getItem().getId() %>, <%= i.getItem().getName() %>, Amount Bought:<%= i.getNrOfItems() %></p>
+            <%  } %>
+            <form action="packOrder" method="post">
+                <input type="hidden" name="orderId" value="<%= o.getOrderID() %>">
+                <input type="submit" value="send order">
+            </form>
+        </div>
+        <%
+        }
+    } %>
 </div>
 
 </body>
