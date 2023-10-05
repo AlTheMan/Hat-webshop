@@ -26,15 +26,18 @@ import jakarta.servlet.annotation.*;
 
 
 @WebServlet(name = "ControllerServlet", value = {
-        "/shoppingBasket",
+
         "/wares",
         "/hatPage",
         "/login",
         "/userAdmin",
         "/itemAdmin",
-        "/addItemToShoppingCart",
+        "/addItemToShoppingCartFromIndex",
         "/buyItems",
-        "/removeItemFromShoppingCart"})
+        "/removeItemFromShoppingCartFromIndex",
+        "/goToShoppingcart",
+        "/addItemToShoppingCartFromShoppingcartPage",
+        "/removeItemFromShoppingCartFromShoppingcartPage"})
 
 
 
@@ -74,14 +77,23 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "/itemAdmin": handleItemAdmin(request, response);
                 break;
-            case "/addItemToShoppingCart":
-                handleAddItemToShoppingCart(request,response);
+            case "/addItemToShoppingCartFromIndex":
+                handleAddItemToShoppingCartFromIndex(request,response);
                 break;
             case "/buyItems":
                 handleBuyItems(request,response);
                 break;
-            case "/removeItemFromShoppingCart":
-                handleRemoveItemFromShoppingCart(request,response);
+            case "/removeItemFromShoppingCartFromIndex":
+                handleRemoveItemFromShoppingCartFromIndex(request,response);
+                break;
+            case "/addItemToShoppingCartFromShoppingcartPage":
+                handleAddItemToShoppingCartFromShoppingcartPage(request,response);
+                break;
+            case "/removeItemFromShoppingCartFromShoppingcartPage":
+                handleRemoveItemFromShoppingCartFromShoppingcartPage(request,response);
+                break;
+            case "/goToShoppingcart":
+                handleGoToShoppingcart(request,response);
                 break;
             default:break;
         }
@@ -91,23 +103,50 @@ public class ControllerServlet extends HttpServlet {
         request.setAttribute("items", ItemHandler.getAllItems());
     }
 
-    private void handleAddItemToShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void handleGoToShoppingcart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        User user = getUserSession(request);
+        if (user != null) {
+            request.setAttribute("shoppingcart", user.getShoppingcart());
+            request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
+        }
+    }
+
+    private void handleAddItemToShoppingCartFromIndex(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        handleAddItemToShoppingCartDefault(request, response);
+        request.setAttribute("items", ItemHandler.getAllItems());
+        request.getRequestDispatcher("index.jsp").forward(request, response);  // After adding the item, redirect back to index.jsp
+    }
+    private void handleAddItemToShoppingCartFromShoppingcartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        handleAddItemToShoppingCartDefault(request, response);
+        User user = getUserSession(request);
+        request.setAttribute("shoppingcart", user.getShoppingcart());
+        request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
+    }
+    private void handleAddItemToShoppingCartDefault(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
             String stringItemId = request.getParameter("itemId");
             int itemId = Integer.parseInt(stringItemId);
             Item item = ItemHandler.getItemByID(itemId);
-            user.getShoppingcart().addItems(item,1);
+            user.getShoppingcart().addItems(item, 1);
             System.out.println(user.getShoppingcart().toString());
-            //System.out.println("nr of items in index 0: "+user.getShoppingcart().getItems().get(0).getNrOfItems());
         }
-        // After adding the item, redirect back to itemPage.jsp
-        request.setAttribute("items", ItemHandler.getAllItems());
-        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
-
     }
 
-    private void handleRemoveItemFromShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+    private void handleRemoveItemFromShoppingCartFromShoppingcartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        handleRemoveItemFromShoppingCartDefault(request,response);
+        User user = getUserSession(request);
+        request.setAttribute("shoppingcart", user.getShoppingcart());
+        request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
+
+    }
+    private void handleRemoveItemFromShoppingCartFromIndex(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        handleRemoveItemFromShoppingCartDefault(request,response);
+        request.setAttribute("items", ItemHandler.getAllItems());
+        request.getRequestDispatcher("index.jsp").forward(request, response); // After adding the item, redirect back to index.jsp
+    }
+    private void handleRemoveItemFromShoppingCartDefault(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
             String stringItemId = request.getParameter("itemId");
@@ -115,13 +154,10 @@ public class ControllerServlet extends HttpServlet {
             Item item = ItemHandler.getItemByID(itemId);
             user.getShoppingcart().removeItems(item,1);
             System.out.println(user.getShoppingcart().toString());
-            //System.out.println("nr of items in index 0: "+user.getShoppingcart().getItems().get(0).getNrOfItems());
         }
-        // After adding the item, redirect back to itemPage.jsp
-        request.setAttribute("items", ItemHandler.getAllItems());
-        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
-
     }
+
+
     private void handleBuyItems(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
@@ -137,10 +173,9 @@ public class ControllerServlet extends HttpServlet {
             }
 
         }
-        // After adding the item, redirect back to itemPage.jsp
-        request.setAttribute("items", ItemHandler.getAllItems());
-        request.getRequestDispatcher("itemPage.jsp").forward(request, response);
-
+        // After adding the item, redirect back to shoppingcart.jsp
+        request.setAttribute("shoppingcart", user.getShoppingcart());
+        request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
     }
 
 

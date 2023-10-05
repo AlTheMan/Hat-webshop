@@ -1,11 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %><%--
-  Created by IntelliJ IDEA.
-  User: emilw
-  Date: 2023-10-02
-  Time: 11:17
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %>
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,22 +28,11 @@
         <td><%= item.getDescription() %></td>
         <td><%= item.getPrice() %></td>
         <td><%= item.getQuantity() %></td>
-        <form action="addItemToShoppingCart" method="post">
-            <input type="hidden" name="itemId" value="<%= item.getId() %>">
-            <input type="submit" value="+">
-        </form>
-        <form action="removeItemFromShoppingCart" method="post">
-            <input type="hidden" name="itemId" value="<%= item.getId() %>">
-            <input type="submit" value="-">
-        </form>
-
     </tr>
     <% } %>
 
 </table>
-<form method="post" action="buyItems">
-    <input type="submit" value="Purchase">
-</form>
+
 </body>
 
 </html>

@@ -12,7 +12,11 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-
+<%
+    ControllerServlet.getInitUsers(request);
+    @SuppressWarnings("unchecked")
+    ArrayList<Item> shopItems = (ArrayList<Item>) request.getAttribute("items");
+%>
 
 
 <br/>
@@ -22,17 +26,19 @@
         <%= "Hattshopp" %>
     </h1>
 </div>
+<div class="grid-container-header">
+    <div class = "image-header">
+        <form method="post" action="goToShoppingcart">
+            <input type="image" src="images/basket.png"  width="100px" value="Shoppingcart">
+        </form>
+    </div>
+</div>
+
+
 <div class="main-content">
-    <%
 
-        ControllerServlet.getInitUsers(request);
-
-        @SuppressWarnings("unchecked")
-        ArrayList<Item> shopItems = (ArrayList<Item>) request.getAttribute("items");
-
-
-    %>
     <div class="grid-container">
+
         <% for (Item item : shopItems) { %>
         <div class="item-card">
             <img src="images/hat/<%= item.getImagesrc() %>" alt="<%= item.getName() %> Image">
@@ -40,6 +46,14 @@
             <p><%= item.getDescription() %></p>
             <p>Price: <%= item.getPrice() %></p>
             <p>Quantity: <%= item.getQuantity() %></p>
+            <form action="addItemToShoppingCartFromIndex" method="post">
+                <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                <input type="submit" value="+">
+            </form>
+            <form action="removeItemFromShoppingCartFromIndex" method="post">
+                <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                <input type="submit" value="-">
+            </form>
         </div>
         <% } %>
     </div>
@@ -68,11 +82,6 @@
     <form method="post" action="wares">
         <input type="hidden" name="action" value="remove">
         <input type="submit" value="Här är lagret">
-    </form>
-    <br>
-    <form method="post" action="shoppingBasket">
-        <input type="hidden" name="action" value="remove">
-        <input type="submit" value="Shopping basket">
     </form>
     <br>
     <br>

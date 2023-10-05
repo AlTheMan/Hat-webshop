@@ -97,6 +97,15 @@ img {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
+.grid-container-header {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+    width: 100px;
+}
+.image-header{
+    width: 100px;
+}
 
 .item-card {
     border: 1px solid #ccc;
