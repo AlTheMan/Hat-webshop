@@ -27,6 +27,18 @@ public class OrderDB extends Order {
         return;
     }
 
+    public static void updateStatusOfOrder(OrderStatus orderStatus, int orderID) {
+        Connection con = DBManager.getConnection();
+        String sql = "UPDATE orders SET status = ? WHERE order_id = ?";
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setString(1, orderStatus.toString());
+            statement.setInt(2, orderID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Collection<Order> getDBOrderAll() {
         Connection con = DBManager.getConnection();
         Collection<Order> orderCollection = new ArrayList<>();

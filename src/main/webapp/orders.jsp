@@ -28,6 +28,10 @@
             for(OrderItem i: orderitems){ %>
                 <p> id: <%= i.getItem().getId() %>, <%= i.getItem().getName() %>, Amount Bought:<%= i.getNrOfItems() %></p>
         <%  } %>
+        <form action="packOrder" method="post">
+            <input type="hidden" name="orderId" value="<%= o.getOrderID() %>">
+            <input type="submit" value="send order">
+        </form>
     </div>
     <% } %>
 </div>

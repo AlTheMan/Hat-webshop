@@ -38,6 +38,9 @@ public class Order {
     public static void updateStatusOfOrder(OrderStatus orderStatus, Order order) {
         OrderDB.updateStatusOfOrder(orderStatus,order);
     }
+    public static void updateStatusOfOrder(OrderStatus orderStatus, int orderID) {
+        OrderDB.updateStatusOfOrder(orderStatus,orderID);
+    }
 
     public String getCustomerName() {
         return customerName;

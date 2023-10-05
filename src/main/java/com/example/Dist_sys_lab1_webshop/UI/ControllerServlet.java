@@ -10,6 +10,7 @@ import com.example.Dist_sys_lab1_webshop.Model.Item.ImageHelper;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderHandler;
+import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
@@ -39,7 +40,8 @@ import jakarta.servlet.annotation.*;
         "/goToShoppingcart",
         "/addItemToShoppingCartFromShoppingcartPage",
         "/removeItemFromShoppingCartFromShoppingcartPage",
-        "/ordersPage"})
+        "/ordersPage",
+        "/packOrder"})
 
 
 
@@ -100,12 +102,21 @@ public class ControllerServlet extends HttpServlet {
             case "/ordersPage":
                 handleOrdersPage(request,response);
                 break;
+            case "/packOrder":
+                handlePackOrder(request,response);
+                break;
             default:break;
         }
     }
 
     public static void getInitUsers(HttpServletRequest request){
         request.setAttribute("items", ItemHandler.getAllItems());
+    }
+    private void handlePackOrder(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        OrderHandler.updateStatusOfOrder(OrderStatus.SHIPPED,orderId);
+        request.setAttribute("orders", OrderHandler.getAllOrders());
+        request.getRequestDispatcher("orders.jsp").forward(request, response);
     }
 
     private void handleOrdersPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

@@ -14,4 +14,9 @@ public class OrderHandler {
         Order.updateStatusOfOrder(orderStatus, order);
         order.setOrderStatus(orderStatus); //TODO: borde kolla om statusen ändras i databsen.
     }
+    public static void updateStatusOfOrder(OrderStatus orderStatus, int orderID) {
+        Order.updateStatusOfOrder(orderStatus, orderID);
+
+        //order.setOrderStatus(orderStatus); //TODO: borde kolla om statusen ändras i databsen.
+    }
 }
