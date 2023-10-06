@@ -2,9 +2,8 @@ package com.example.Dist_sys_lab1_webshop.Model.Item;
 
 import com.example.Dist_sys_lab1_webshop.Database.ItemDB;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 public class Item {
 
@@ -26,7 +25,9 @@ public class Item {
 	}
 
 
-	public Item(String name, String description, double price, int quantity, String imagesrc) {
+
+
+	protected Item(String name, String description, double price, int quantity, String imagesrc) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -34,11 +35,39 @@ public class Item {
 		this.imagesrc = imagesrc;
 	}
 
+	protected Item() {
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setImagesrc(String imagesrc) {
+		this.imagesrc = imagesrc;
+	}
+
 	public static Collection<Item> getDBItemsWithCategory(String category) throws NoSuchMethodException {
 		throw new NoSuchMethodException();
 	}
 
-	public static Collection<Item> getDBItemsAll() {
+	public static ArrayList<Item> getDBItemsAll() {
+
 		return ItemDB.getDBItemsAll();
 	}
 
@@ -46,14 +75,16 @@ public class Item {
 		return id;
 	}
 
-	public static Item getDBItemByID(int id){return ItemDB.getDBItemByID(id);} //TODO: skicka tillbaka en kopia istället?
+	public static Item getDBItemByID(int id){
+		return ItemDB.getDBItemByID(id);
+	}
 
 	public String getName() {
 		return name;
 	}
 
-	protected static void updateItemById(int id, HashMap<String, String> values) {
-		ItemDB.updateItemById(id, values);
+	protected static void updateItemById(Item updateItem) {
+		ItemDB.updateItemByIdPrepared(updateItem);
 	}
 
 	protected static void addItemToDB(Item item) {

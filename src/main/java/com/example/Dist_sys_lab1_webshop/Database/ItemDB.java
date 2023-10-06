@@ -4,10 +4,7 @@ import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 
 public class ItemDB extends Item {
@@ -16,9 +13,9 @@ public class ItemDB extends Item {
 		super(id, name, description, price, quantity, imagesrc);
 	}
 
-	public static Collection<Item> getDBItemsAll() {
+	public static ArrayList<Item> getDBItemsAll() {
 		Connection con = DBManager.getConnection();
-		Collection<Item> itemCollection = new ArrayList<>();
+		ArrayList<Item> itemCollection = new ArrayList<>();
 		try {
 			Statement statement = con.createStatement();
 			String query = "SELECT * from item";
@@ -90,33 +87,34 @@ public class ItemDB extends Item {
 		return true; //Kolla om detta returnerar true endast vid success.
 	}
 
-//TODO: denna behöver kanske skrivas om
-	public static void updateItemById(int id, HashMap<String, String> values)  {
+/*
+	public static void updateItemById(Item item)  {
 		Connection con = DBManager.getConnection();
 		String baseSQL = "UPDATE item SET";
+		int id = item.getId();
 		try {
 			con.setAutoCommit(false);
 			Statement statement = con.createStatement();
 
-			if (values.containsKey("itemName")) {
+			if (item.getName() != null) {
 				statement.executeUpdate(baseSQL + " name = '" +
-						values.get("itemName") + "' WHERE id = " + id);
+						item.getName() + "' WHERE id = " + id);
 			}
-			if (values.containsKey("descriptionName")) {
+			if (item.getDescription() != null) {
 				statement.executeUpdate(baseSQL + " description = '" +
-						values.get("descriptionName") + "' WHERE id = " + id);
+						item.getDescription() + "' WHERE id = " + id);
 			}
-			if(values.containsKey("itemPrice")) {
+			if(item.getPrice() > 0) {
 				statement.executeUpdate(baseSQL + " price = " +
-						values.get("itemPrice") + " WHERE id = " + id);
+						item.getPrice() + " WHERE id = " + id);
 			}
-			if (values.containsKey("itemQuantity")) {
+			if (item.getQuantity() > -1) {
 				statement.executeUpdate(baseSQL + " quantity = " +
-						values.get("itemQuantity") + " WHERE id = " + id);
+						item.getQuantity() + " WHERE id = " + id);
 			}
-			if (values.containsKey("itemIMG")) {
+			if (item.getImagesrc() != null) {
 				statement.executeUpdate(baseSQL + " imagesrc = '" +
-						values.get("itemIMG") + "' WHERE id = " + id);
+						item.getImagesrc() + "' WHERE id = " + id);
 			}
 
 			con.commit();
@@ -135,7 +133,67 @@ public class ItemDB extends Item {
 				e.printStackTrace();
 			}
 		}
+	}*/
 
+	public static void updateItemByIdPrepared(Item item) {
+		Connection con = DBManager.getConnection();
+
+		try {
+			con.setAutoCommit(false);
+
+			String updateSQL = "UPDATE item SET ";
+			List<String> updateFields = new ArrayList<>();
+			List<Object> parameters = new ArrayList<>();
+
+			if (item.getName() != null) {
+				updateFields.add("name = ?");
+				parameters.add(item.getName());
+			}
+			if (item.getDescription() != null) {
+				updateFields.add("description = ?");
+				parameters.add(item.getDescription());
+			}
+			if (item.getPrice() > 0) {
+				updateFields.add("price = ?");
+				parameters.add(item.getPrice());
+			}
+			if (item.getQuantity() > -1) {
+				updateFields.add("quantity = ?");
+				parameters.add(item.getQuantity());
+			}
+			if (item.getImagesrc() != null) {
+				updateFields.add("imagesrc = ?");
+				parameters.add(item.getImagesrc());
+			}
+
+			if (updateFields.isEmpty()) {
+				con.setAutoCommit(true);
+				return;
+			}
+
+			updateSQL += String.join(", ", updateFields) + " WHERE id = ?";
+
+			try (PreparedStatement preparedStatement = con.prepareStatement(updateSQL)) {
+				for (int i = 0; i < parameters.size(); i++) {
+					preparedStatement.setObject(i + 1, parameters.get(i));
+				}
+				preparedStatement.setInt(parameters.size() + 1, item.getId());
+				preparedStatement.executeUpdate();
+
+				con.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				con.rollback();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void addItemToDB(Item item) {
