@@ -4,10 +4,10 @@ import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 
 import java.util.ArrayList;
 
-public class Shoppingcart {
+public class ShoppingCart {
     private ArrayList<ShoppingItem> items;
 
-    public Shoppingcart() {
+    public ShoppingCart() {
         this.items = new ArrayList<>();
     }
 

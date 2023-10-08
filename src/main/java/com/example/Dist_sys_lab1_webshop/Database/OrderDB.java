@@ -99,4 +99,16 @@ public class OrderDB extends Order {
         }
         return orderCollection;
     }
+
+
+    public static OrderDB getOrdersWithOrderItems(int orderId) {
+        
+
+
+
+        return null;
+    }
+
+
+
 }

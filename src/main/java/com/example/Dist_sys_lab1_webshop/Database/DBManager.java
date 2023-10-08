@@ -23,6 +23,7 @@ public class DBManager {
 			return connection;
 		}
 		try {
+			setInitUser();
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, currentUser, passw);
 			return connection;

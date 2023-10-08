@@ -32,7 +32,8 @@ public class UserHandler {
 				values.get("username"),
 				values.get("password"),
 				values.get("userPrivilege"),
-				values.get("userEmail"));
+				values.get("userEmail"),
+				values.get("userAddress"));
 
 	}
 
@@ -40,7 +41,8 @@ public class UserHandler {
 		int userId = Integer.parseInt(values.get("userId"));
 		String privilege = values.get("userPrivilege");
 		String email = values.get("userEmail");
-		User.updateUserInDB(userId, privilege, email);
+		String address = values.get("userAddress");
+		User.updateUserInDB(userId, privilege, email, address);
 	}
 
 	public static void deleteUser(int id) {

@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-    ControllerServlet.getInitUsers(request);
+    ControllerServlet.getInitItems(request);
     @SuppressWarnings("unchecked")
     ArrayList<Item> shopItems = (ArrayList<Item>) request.getAttribute("items");
 %>

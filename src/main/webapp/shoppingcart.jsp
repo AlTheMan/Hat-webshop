@@ -6,11 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart" %>
-<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.ShoppingItem" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.ShoppingItem" %>
-<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.ShoppingCart" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.*" %>
 <html>
 <head>
     <title>Checkout</title>
@@ -18,7 +17,9 @@
 </head>
 <body>
 <%
-    Shoppingcart shoppingCart = (Shoppingcart) request.getAttribute("shoppingcart");
+    User user = (User) request.getAttribute("user");
+    System.out.println(user.getId());
+    ShoppingCart shoppingCart = user.getShoppingcart();
 %>
 
     <h2>
@@ -59,6 +60,8 @@
 <form method="post" action="buyItems">
     <input type="submit" value="Purchase">
 </form>
+
+<% %>
 
 
 </body>

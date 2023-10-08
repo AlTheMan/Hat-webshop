@@ -3,7 +3,7 @@ package com.example.Dist_sys_lab1_webshop.Model.User;
 import com.example.Dist_sys_lab1_webshop.Database.ItemDB;
 import com.example.Dist_sys_lab1_webshop.Database.UserDB;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -13,33 +13,57 @@ public class User {
 	private String password;
 	private String email;
 	private Privilege privilege;
-	private Shoppingcart shoppingcart;
+	private String address;
+	private ShoppingCart shoppingcart;
 
-	public User(String username, String password, String email, Privilege privilege, int id, Shoppingcart shoppingcart) {
+	public User(String username, String password, String email, Privilege privilege, int id, ShoppingCart shoppingcart, String address) {
 		this.password = password;
 		this.userName = username;
 		this.email = email;
 		this.privilege = privilege;
 		this.id = id;
 		this.shoppingcart=shoppingcart;
+		this.address = address;
 	}
-	public User(String username, String password, String email, Privilege privilege, int id){
-		this(username,password,email,privilege,id,new Shoppingcart());
+	public User(String username, String password, String email, Privilege privilege, int id, String address){
+		this(username,password,email,privilege,id,new ShoppingCart(), address);
 	}
 
 
-	public User(String username, String email, String privilege, int id){
+	public User(String username, String email, Privilege privilege, int id, String address){
 		this.userName = username;
 		this.email = email;
-		this.privilege = Privilege.valueOf(privilege);
+		this.privilege = privilege;
 		this.id = id;
 		this.password = "******";
-		this.shoppingcart=new Shoppingcart();
+		this.shoppingcart=new ShoppingCart();
+		this.address = address;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public static User getUserFromId(ArrayList<User> users, int id) {
+		for (User u : users) {
+			if (u.getId() == id){
+				return u;
+			}
+		}
+		return null;
+	}
+
 	public User(){
-		this.shoppingcart=new Shoppingcart();
+		this.shoppingcart=new ShoppingCart();
 	}
 
 	public int getId() {
@@ -58,12 +82,12 @@ public class User {
 		return UserDB.getAllUsersFromDB();
 	}
 
-	protected static void updateUserInDB(int userId, String privilege, String email) {
-		UserDB.updateUserInDB(userId, privilege, email);
+	protected static void updateUserInDB(int userId, String privilege, String email, String address) {
+		UserDB.updateUserInDB(userId, privilege, email, address);
 	}
 
-	protected static void addUserToDB(String username, String password, String privilege, String email){
-		UserDB.addUserToDB(username, password, privilege, email);
+	protected static void addUserToDB(String username, String password, String privilege, String email, String address){
+		UserDB.addUserToDB(username, password, privilege, email, address);
 	}
 
 	protected static void deleteUserFromDB(int userId) {
@@ -82,18 +106,20 @@ public class User {
 		}
 
 		User user = new User();
+		user.id = dbUser.id;
 		user.userName = dbUser.userName;
 		user.email = dbUser.email;
 		user.privilege = dbUser.privilege;
 		user.password = "********";
-		user.shoppingcart=new Shoppingcart();
+		user.address = dbUser.address;
+		user.shoppingcart=new ShoppingCart();
 		return user;
 	}
-	public Shoppingcart getShoppingcart(){
+	public ShoppingCart getShoppingcart(){
 		return shoppingcart;
 	}
 	public static boolean buyItems(User user) {
-		return ItemDB.addUserOrder(user);
+		return UserDB.addUserOrder(user);
 	}
 
 	public String getEmail() {

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
-import com.example.Dist_sys_lab1_webshop.Database.DBManager;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ImageHelper;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
@@ -14,7 +13,6 @@ import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
-import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -52,8 +50,6 @@ public class ControllerServlet extends HttpServlet {
 
     public void init() {
 
-        DBManager.setInitUser();
-
 
     }
 
@@ -77,10 +73,10 @@ public class ControllerServlet extends HttpServlet {
                 response.sendRedirect("hatPage.jsp");
                 break;
             case "/login":
-                handleLoginServlet(request, response);
+                handleLogin(request, response);
                 break;
             case "/userAdmin":
-                handleAdminServlet(request, response);
+                handleAdmin(request, response);
                 break;
             case "/itemAdmin": handleItemAdmin(request, response);
                 break;
@@ -112,7 +108,7 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    public static void getInitUsers(HttpServletRequest request){
+    public static void getInitItems(HttpServletRequest request){
         request.setAttribute("items", ItemHandler.getAllItemsFromDb());
     }
     private void handlePackOrder(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -130,7 +126,9 @@ public class ControllerServlet extends HttpServlet {
     private void handleGoToShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
-            request.setAttribute("shoppingcart", user.getShoppingcart());
+            System.out.println(user.getAddress());
+            System.out.println(user.getId());
+            request.setAttribute("user", user);
             request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
         }
     }
@@ -144,7 +142,7 @@ public class ControllerServlet extends HttpServlet {
     private void handleAddItemToShoppingCartFromShoppingCartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         handleAddItemToShoppingCartDefault(request, response);
         User user = getUserSession(request);
-        request.setAttribute("shoppingcart", user.getShoppingcart());
+        request.setAttribute("user", user);
         //response.sendRedirect("shoppingcart.jsp");
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
     }
@@ -163,7 +161,7 @@ public class ControllerServlet extends HttpServlet {
     private void handleRemoveItemFromShoppingCartFromShoppingCartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         handleRemoveItemFromShoppingCartDefault(request,response);
         User user = getUserSession(request);
-        request.setAttribute("shoppingcart", user.getShoppingcart());
+        request.setAttribute("user", user);
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
 
     }
@@ -200,13 +198,13 @@ public class ControllerServlet extends HttpServlet {
 
         }
         // After adding the item, redirect back to shoppingcart.jsp
-        request.setAttribute("shoppingcart", user.getShoppingcart());
+        request.setAttribute("user", user);
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
     }
 
 
 
-    private void handleAdminServlet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void handleAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
         if (action != null){
             System.out.println(action);
@@ -217,16 +215,14 @@ public class ControllerServlet extends HttpServlet {
                 default: break;
             }
         }
-        User user = getUserSession(request);
-        if (user != null) {
-            if (user.getPrivilege() == Privilege.ADMIN){
-                request.setAttribute("users", UserHandler.getAllUsers());
-                request.getRequestDispatcher("userAdminPage.jsp").forward(request, response);
-            }
+        if (checkAdmin(getUserSession(request))) {
+            request.setAttribute("users", UserHandler.getAllUsers());
+            request.getRequestDispatcher("userAdminPage.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("index.jsp");
         }
     }
     private void addUser(HttpServletRequest request){
-        System.out.println("Add user");
         HashMap<String, String> values = new HashMap<>();
         Enumeration<String> parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()){
@@ -262,7 +258,7 @@ public class ControllerServlet extends HttpServlet {
         UserHandler.updateUser(values);
     }
 
-    private void handleLoginServlet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         User user = UserHandler.authenticateUser(name, password);
@@ -296,13 +292,13 @@ public class ControllerServlet extends HttpServlet {
                 default: break;
             }
         }
-
-        // If user is admin the page will load
         if (checkAdmin(getUserSession(request))) {
             request.setAttribute("images", ImageHelper.getImageNames());
             request.setAttribute("items", ItemHandler.getAllItemsFromDb());
             request.getRequestDispatcher("itemAdminPage.jsp").forward(request, response);
-       }
+       } else {
+            response.sendRedirect("index.jsp");
+        }
     }
 
     /**

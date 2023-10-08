@@ -11,15 +11,15 @@ public class Order {
     private ArrayList<OrderItem> orderItems;
     private String customerName;
     private Date orderDate;
-    private String shippingaddress;
+    private String shippingAddress;
     private OrderStatus orderStatus;
 
-    public Order(int orderID, ArrayList<OrderItem> orderItems, String customerName, Date orderDate, String shippingaddress, OrderStatus orderStatus) {
+    public Order(int orderID, ArrayList<OrderItem> orderItems, String customerName, Date orderDate, String shippingAddress, OrderStatus orderStatus) {
         this.orderID = orderID;
         this.orderItems = orderItems;
         this.customerName = customerName;
         this.orderDate = orderDate;
-        this.shippingaddress = shippingaddress;
+        this.shippingAddress = shippingAddress;
         this.orderStatus = orderStatus;
     }
 
@@ -51,7 +51,7 @@ public class Order {
     }
 
     public String getShippingAddress() {
-        return shippingaddress;
+        return shippingAddress;
     }
 
     public OrderStatus getOrderStatus() {
