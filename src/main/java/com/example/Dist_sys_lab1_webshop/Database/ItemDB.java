@@ -148,7 +148,7 @@ public class ItemDB extends Item {
 				updateFields.add("imagesrc = ?");
 				parameters.add(item.getImagesrc());
 			}
-			if (item.getCategory() != null) {
+			if (item.getCategoryId() > -1) {
 				updateFields.add("categoryid = ?");
 				parameters.add(item.getCategoryId());
 			}
