@@ -14,9 +14,10 @@ public class Item {
 	private int quantity;
 	private String imagesrc;
 	private String category;
+	private int categoryId;
 
 
-	protected Item(int id, String name, String description, double price, int quantity, String imagesrc, String category) {
+	protected Item(int id, String name, String description, double price, int quantity, String imagesrc, String category, int categoryId) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -24,21 +25,31 @@ public class Item {
 		this.quantity = quantity;
 		this.imagesrc=imagesrc;
 		this.category=category;
+		this.categoryId=categoryId;
 	}
 
 
 
 
-	protected Item(String name, String description, double price, int quantity, String imagesrc, String category) {
+	protected Item(String name, String description, double price, int quantity, String imagesrc, String category,int categoryId) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
 		this.imagesrc = imagesrc;
 		this.category=category;
+		this.categoryId=categoryId;
 	}
 
 	protected Item() {
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public void setId(int id) {

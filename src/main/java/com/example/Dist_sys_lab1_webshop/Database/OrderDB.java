@@ -71,7 +71,7 @@ public class OrderDB extends Order {
                     System.out.println("\tQuantity: " + quantity);
 
                     Statement itemStatement = con.createStatement();
-                    ResultSet itemResultSet = itemStatement.executeQuery("SELECT * FROM item WHERE id = " + itemId);
+                    ResultSet itemResultSet = itemStatement.executeQuery("SELECT item.*, categories.category AS category FROM item JOIN categories ON item.categoryId = categories.id WHERE item.id =" + itemId);
 
                     ItemDB itemDB = null;
                     if (itemResultSet.next()) { //tabell item
@@ -80,8 +80,9 @@ public class OrderDB extends Order {
                         double price = itemResultSet.getDouble("price");
                         int itemQuantity = itemResultSet.getInt("quantity");
                         String imagesrc = itemResultSet.getString("imagesrc");
+                        int categoryid = itemResultSet.getInt("categoryid");
                         String category = itemResultSet.getString("category");
-                        itemDB= new ItemDB(itemId, itemName, description, price, itemQuantity, imagesrc, category);
+                        itemDB= new ItemDB(itemId, itemName, description, price, itemQuantity, imagesrc, category, categoryid);
 
                         System.out.println("\t\tItem Name: " + itemName);
                     }

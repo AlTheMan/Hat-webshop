@@ -13,8 +13,8 @@ import java.util.*;
 
 public class ItemDB extends Item {
 
-	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, String category) {
-		super(id, name, description, price, quantity, imagesrc, category);
+	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, String category,int categoryId) {
+		super(id, name, description, price, quantity, imagesrc, category, categoryId);
 	}
 
 	public static ArrayList<Item> getDBItemsAll() {
@@ -22,7 +22,7 @@ public class ItemDB extends Item {
 		ArrayList<Item> itemCollection = new ArrayList<>();
 		try {
 			Statement statement = con.createStatement();
-			String query = "SELECT * from item";
+			String query = "SELECT item.*, categories.category AS category FROM item JOIN categories ON item.categoryId = categories.id;";
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");
@@ -31,8 +31,9 @@ public class ItemDB extends Item {
 				double price = resultSet.getDouble("price");
 				int quantity = resultSet.getInt("quantity");
 				String imagesrc = resultSet.getString("imagesrc");
+				int categoryId = resultSet.getInt("categoryid");
 				String category= resultSet.getString("category");
-				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc, category));
+				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc, category, categoryId));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,7 +43,7 @@ public class ItemDB extends Item {
 	public static Item getDBItemByID(int idInput) {
 		Connection con = DBManager.getConnection();
 		Item item = null;
-		String sql = "SELECT * from item WHERE ID= ?";
+		String sql = "SELECT item.*, categories.category AS category FROM item JOIN categories ON item.categoryId = categories.id WHERE item.id = ?;";
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			statement.setInt(1, idInput);
 			try (ResultSet resultSet = statement.executeQuery()) {
@@ -53,8 +54,9 @@ public class ItemDB extends Item {
 					double price = resultSet.getDouble("price");
 					int quantity = resultSet.getInt("quantity");
 					String imagesrc = resultSet.getString("imagesrc");
+					int categoryid = resultSet.getInt("categoryid");
 					String category = resultSet.getString("category");
-					item = new ItemDB(id, name, description, price, quantity, imagesrc, category);
+					item = new ItemDB(id, name, description, price, quantity, imagesrc, category, categoryid);
 				}
 			}
 		} catch (SQLException e) {
@@ -144,8 +146,8 @@ public class ItemDB extends Item {
 				parameters.add(item.getImagesrc());
 			}
 			if (item.getCategory() != null) {
-				updateFields.add("category = ?");
-				parameters.add(item.getCategory());
+				updateFields.add("categoryid = ?");
+				parameters.add(item.getCategoryId());
 			}
 
 			if (updateFields.isEmpty()) {
@@ -181,7 +183,7 @@ public class ItemDB extends Item {
 	public static void addItemToDB(Item item) {
 		Connection connection = DBManager.getConnection();
 
-		String sql = "INSERT INTO item (name, description, price, quantity, imagesrc, category) " +
+		String sql = "INSERT INTO item (name, description, price, quantity, imagesrc, categoryid) " +
 				"VALUES (?, ?, ?, ?, ?, ?)";
 
 		try(PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -190,7 +192,7 @@ public class ItemDB extends Item {
 			statement.setDouble(3, item.getPrice());
 			statement.setInt(4, item.getQuantity());
 			statement.setString(5, item.getImagesrc());
-			statement.setString(6, item.getCategory());
+			statement.setInt(6, item.getCategoryId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
