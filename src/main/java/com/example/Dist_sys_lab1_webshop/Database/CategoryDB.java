@@ -1,11 +1,9 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
 import com.example.Dist_sys_lab1_webshop.Model.Item.Category;
+import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CategoryDB extends Category {
@@ -30,5 +28,19 @@ public class CategoryDB extends Category {
             e.printStackTrace();
         }
         return categoryCollection;
+    }
+
+    public static void addCategory(String category) {
+        Connection connection = DBManager.getConnection();
+
+        String sql = "INSERT INTO categories (category) " +
+                "VALUES (?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, category);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

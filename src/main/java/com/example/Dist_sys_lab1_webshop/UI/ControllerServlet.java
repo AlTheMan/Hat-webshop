@@ -337,6 +337,7 @@ public class ControllerServlet extends HttpServlet {
                 case "updateItem": updateItem(request); break;
                 case "addItem": addItem(request); break;
                 case "removeItem": removeItemById(request); break;
+                case "addCategory": addCategory(request); break;
                 default: break;
             }
         }
@@ -348,6 +349,13 @@ public class ControllerServlet extends HttpServlet {
        } else {
             response.sendRedirect("index.jsp");
         }
+    }
+
+    private void addCategory(HttpServletRequest request) {
+        String categoryName = request.getParameter("categoryName");
+        if (categoryName == null) return;
+        CategoryHandler.addCategory(categoryName);
+
     }
 
     /**

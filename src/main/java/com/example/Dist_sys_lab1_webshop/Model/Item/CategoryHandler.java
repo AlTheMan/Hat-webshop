@@ -16,6 +16,9 @@ public class CategoryHandler {
     }
 
 
+    public static void addCategory(String category){
+        CategoryDB.addCategory(category);
+    }
     public static ArrayList<Category> getCategories() {
         return CategoryDB.getAllCategories(); //TODO: returnera en kopia
     }

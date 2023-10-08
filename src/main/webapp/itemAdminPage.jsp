@@ -65,6 +65,16 @@ if (items != null) { %>
     <% }
     }%>
 </div>
+
+<h2>Add Category</h2>
+<form method="post">
+    <label>Category: <input type=text name="categoryName" value=""></label>
+    <input type="hidden" value="addCategory" name="action">
+    <input type="submit" value="Submit">
+</form>
+
+
+
 <% String itemId = request.getParameter("itemId");
 if (itemId != null) {
 
