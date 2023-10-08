@@ -60,23 +60,10 @@
 
     <br>
     <br>
-    <br>
-    <br>
-
-    <br>
-    <form method="post" action="hatPage">
-        <input type="hidden" name="action" value="remove">
-        <input type="submit" value="Här finns en hatt">
-    </form>
-    <br>
     <form method="post" action="wares">
         <input type="hidden" name="action" value="remove">
         <input type="submit" value="Här är lagret">
     </form>
-    <br>
-    <br>
-
-
 
     <% User user = (User) session.getAttribute("user");
 	if (user != null) {
