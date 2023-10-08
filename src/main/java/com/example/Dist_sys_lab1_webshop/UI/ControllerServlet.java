@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+import com.example.Dist_sys_lab1_webshop.Model.Item.CategoryHandler;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ImageHelper;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Item.ItemHandler;
@@ -340,6 +341,7 @@ public class ControllerServlet extends HttpServlet {
             }
         }
         if (checkAdmin(getUserSession(request))) {
+            request.setAttribute("categories", CategoryHandler.getCategories());
             request.setAttribute("images", ImageHelper.getImageNames());
             request.setAttribute("items", ItemHandler.getAllItemsFromDb());
             request.getRequestDispatcher("itemAdminPage.jsp").forward(request, response);

@@ -1,5 +1,6 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
+import com.example.Dist_sys_lab1_webshop.Model.Item.Category;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 import com.example.Dist_sys_lab1_webshop.Model.User.ShoppingCart;
@@ -16,6 +17,8 @@ public class ItemDB extends Item {
 	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, String category,int categoryId) {
 		super(id, name, description, price, quantity, imagesrc, category, categoryId);
 	}
+
+
 
 	public static ArrayList<Item> getDBItemsAll() {
 		Connection con = DBManager.getConnection();
@@ -193,6 +196,7 @@ public class ItemDB extends Item {
 			statement.setInt(4, item.getQuantity());
 			statement.setString(5, item.getImagesrc());
 			statement.setInt(6, item.getCategoryId());
+			System.out.println("category ID in DB: " + item.getCategoryId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

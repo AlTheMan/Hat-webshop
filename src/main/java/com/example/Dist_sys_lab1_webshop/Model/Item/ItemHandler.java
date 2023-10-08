@@ -45,7 +45,9 @@ public class ItemHandler {
 		item.setName(values.get("itemName"));
 		item.setDescription(values.get("descriptionName"));
 		item.setImagesrc(values.get("itemIMG"));
-		item.setCategory(values.get("itemCategory"));
+		System.out.println("kategori id: @@: "+ Integer.parseInt(values.get("itemCategoryId")));
+		item.setCategoryId(Integer.parseInt(values.get("itemCategoryId")));
+		//TODO: uppdatera item.setCategory() med värdet från item.getCategoryID(), som man gör en lookup på i databasen vilken kategori det ID:t motsvarar.
 
 		String quantityString = values.get("itemQuantity");
 		String priceString = values.get("itemPrice");

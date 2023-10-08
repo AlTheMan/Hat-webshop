@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %><%--
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %>
+<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Category" %><%--
   Created by IntelliJ IDEA.
   User: emilw
   Date: 2023-10-04
@@ -13,14 +14,24 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-<%  ArrayList<String> images = (ArrayList<String>) request.getAttribute("images"); %>
+<%  ArrayList<String> images = (ArrayList<String>) request.getAttribute("images");
+    ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
+%>
 <h2>Add Item</h2>
 <form>
     <label>Name: <input name="itemName" value="" type="text"></label>
     <label>Description: <input name="descriptionName" value="" type="text"></label>
     <label>Price: <input name="itemPrice" value="" type="number" min="0"></label>
     <label>Quantity: <input name="itemQuantity" value="" type="number" min="0"></label>
-    <label>category: <input name="itemCategory" value="" type="text"></label>
+
+    <% if (categories != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Category</label>
+    <select name="itemCategoryId" id="dropdown">
+        <% for (Category c : categories) { %>
+        <option value="<%=c.getCategoryId()%>"> <%=c.getCategory()%> </option>
+        <%}%>
+    </select>
+    <%}%>
+
     <% if (images != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Image</label>
     <select name="itemIMG" id="dropdown">
         <% for (String image : images) { %>
@@ -69,7 +80,15 @@ if (itemId != null) {
     <label>Edit description: <input name="descriptionName" value="" type="text"></label>
     <label>Edit price: <input type="number" min="0" name="itemPrice" value=""></label>
     <label>Edit quantity: <input type="number" min="0" name="itemQuantity" value=""></label>
-    <label>Edit category: <input name="itemCategory" value="" type="text"></label>
+
+    <% if (categories != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Category</label>
+    <select name="itemCategoryId" id="dropdown">
+        <option value="">Choose</option>
+        <% for (Category c : categories) { %>
+        <option value="<%=c.getCategoryId()%>"> <%=c.getCategory()%> </option>
+        <%}%>
+    </select>
+    <%}%>
 
 	<% if (images != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Edit image</label>
     <select name="itemIMG" id="dropdown">
