@@ -43,4 +43,15 @@ public class CategoryDB extends Category {
             e.printStackTrace();
         }
     }
+
+    public static void removeCategoryById(int id) {
+        Connection connection = DBManager.getConnection();
+        String sql = "DELETE from categories where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

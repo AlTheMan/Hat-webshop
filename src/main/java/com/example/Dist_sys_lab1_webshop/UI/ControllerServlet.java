@@ -338,6 +338,7 @@ public class ControllerServlet extends HttpServlet {
                 case "addItem": addItem(request); break;
                 case "removeItem": removeItemById(request); break;
                 case "addCategory": addCategory(request); break;
+                case "removeCategory": removeCategory(request); break;
                 default: break;
             }
         }
@@ -349,6 +350,13 @@ public class ControllerServlet extends HttpServlet {
        } else {
             response.sendRedirect("index.jsp");
         }
+    }
+
+    private void removeCategory(HttpServletRequest request) {
+        String categoryId = request.getParameter("categoryId");
+        if (categoryId == null) return;
+        int id = Integer.parseInt(categoryId);
+        CategoryHandler.removeCategoryById(id);
     }
 
     private void addCategory(HttpServletRequest request) {

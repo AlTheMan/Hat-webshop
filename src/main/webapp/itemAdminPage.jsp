@@ -66,13 +66,24 @@ if (items != null) { %>
     }%>
 </div>
 
-<h2>Add Category</h2>
+<h2>Edit Category</h2>
 <form method="post">
-    <label>Category: <input type=text name="categoryName" value=""></label>
+    <label>Add Category: <input type=text name="categoryName" value=""></label>
     <input type="hidden" value="addCategory" name="action">
     <input type="submit" value="Submit">
 </form>
-
+<form method="post">
+    <% if (categories != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Remove Category</label>
+    <select name="categoryId" id="dropdown">
+        <option value="">Choose</option>
+        <% for (Category c : categories) { %>
+        <option value="<%=c.getCategoryId()%>"> <%=c.getCategory()%> </option>
+        <%}%>
+    </select>
+    <%}%>
+    <input type="hidden" value="removeCategory" name="action">
+    <input type="submit" value="Remove">
+</form>
 
 
 <% String itemId = request.getParameter("itemId");
