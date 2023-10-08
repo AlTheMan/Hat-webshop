@@ -60,24 +60,29 @@
 
     <br>
     <br>
+    <div class="item-card">
     <form method="post" action="wares">
         <input type="hidden" name="action" value="remove">
         <input type="submit" value="Här är lagret">
     </form>
-
+        <br>
     <% User user = (User) session.getAttribute("user");
 	if (user != null) {
         System.out.println(user.getPrivilege());
 		if (user.getPrivilege() != Privilege.CUSTOMER) { %>
     <form method="post" action="ordersPage">
         <input type="hidden" name="action" value="remove">
-        <label>Admin/Staff only: <input type="submit" value="Manage orders"></label>
+        <label>Admin/Staff only: <br>
+            <input type="submit" value="Manage orders"></label>
     </form>
+        <br>
     <% }
 		if (user.getPrivilege() == Privilege.ADMIN) { %>
-    <div class="item-card">
+
     <form method="post" action="userAdmin">
-        <label>Admin only: <input type="submit" value="Manage users"></label>
+        <label>Admin only: <br>
+            <input type="submit" value="Manage users">
+        </label>
     </form>
 
     <form method="post" action="itemAdmin">
