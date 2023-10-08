@@ -14,7 +14,7 @@ public class ItemHandler {
 		ArrayList<Item> itemCollection = Item.getDBItemsAll();
 		ArrayList<Item> copy = new ArrayList<>();
 		for (Item item : itemCollection) {
-			Item copyItem = new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getQuantity(), item.getImagesrc());
+			Item copyItem = new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getQuantity(), item.getImagesrc(), item.getCategory());
 			copy.add(copyItem);
 		}
 		return copy;
@@ -45,6 +45,7 @@ public class ItemHandler {
 		item.setName(values.get("itemName"));
 		item.setDescription(values.get("descriptionName"));
 		item.setImagesrc(values.get("itemIMG"));
+		item.setCategory(values.get("itemCategory"));
 
 		String quantityString = values.get("itemQuantity");
 		String priceString = values.get("itemPrice");

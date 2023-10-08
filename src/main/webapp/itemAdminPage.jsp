@@ -20,6 +20,7 @@
     <label>Description: <input name="descriptionName" value="" type="text"></label>
     <label>Price: <input name="itemPrice" value="" type="number" min="0"></label>
     <label>Quantity: <input name="itemQuantity" value="" type="number" min="0"></label>
+    <label>category: <input name="itemCategory" value="" type="text"></label>
     <% if (images != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Image</label>
     <select name="itemIMG" id="dropdown">
         <% for (String image : images) { %>
@@ -44,6 +45,7 @@ if (items != null) { %>
         <p>Price: <%= item.getPrice() %></p>
         <p>Quantity: <%= item.getQuantity() %></p>
         <p>Item id: <%=item.getId()%></p>
+        <p>Category: <%=item.getCategory()%></p>
         <form>
             <input type="hidden" value="<%=item.getId()%>" name="itemId">
             <input type="submit" value="Select">
@@ -67,7 +69,7 @@ if (itemId != null) {
     <label>Edit description: <input name="descriptionName" value="" type="text"></label>
     <label>Edit price: <input type="number" min="0" name="itemPrice" value=""></label>
     <label>Edit quantity: <input type="number" min="0" name="itemQuantity" value=""></label>
-
+    <label>Edit category: <input name="itemCategory" value="" type="text"></label>
 
 	<% if (images != null) { %> <%--@declare id="dropdown"--%> <label for="dropdown">Edit image</label>
     <select name="itemIMG" id="dropdown">
