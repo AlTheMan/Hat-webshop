@@ -63,7 +63,7 @@
     <div class="item-card">
     <form method="post" action="wares">
         <input type="hidden" name="action" value="remove">
-        <input type="submit" value="Här är lagret">
+        <input type="submit" value="Lager">
     </form>
         <br>
     <% User user = (User) session.getAttribute("user");
