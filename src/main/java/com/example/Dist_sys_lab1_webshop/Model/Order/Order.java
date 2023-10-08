@@ -32,7 +32,12 @@ public class Order {
     }
 
     public static Collection<Order> getDBOrdersAll() {
-        return OrderDB.getDBOrderAll();
+        Collection<Order> ordersDB = OrderDB.getDBOrderAll2();
+        Collection<Order> orders = new ArrayList<>();
+        for (Order o: ordersDB){
+            orders.add(new Order(o.getOrderID(), o.getOrderItems(), o.customerName, o.orderDate, o.shippingAddress, o.orderStatus));
+        }
+        return orders;
     }
 
     public static void updateStatusOfOrder(OrderStatus orderStatus, Order order) {

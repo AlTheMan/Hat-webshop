@@ -39,7 +39,7 @@ public class OrderDB extends Order {
         }
     }
 
-    public static Collection<Order> getDBOrderAll() {
+    public static Collection<Order> getDBOrderAll2() {
         Connection con = DBManager.getConnection();
         Collection<Order> orderCollection = new ArrayList<>();
         try {
