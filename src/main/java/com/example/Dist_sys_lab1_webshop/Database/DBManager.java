@@ -10,9 +10,14 @@ import java.sql.SQLException;
 public class DBManager {
 
 	private static String  url = "jdbc:mysql://localhost:3306/dist1";
-	private static String currentUser = "distlab1user";
-	private static String passw = "1234";
+	private static String currentUser = DbUsers.Customer;
+	private static String passw = DbUsers.Password;
 	private static Connection connection;
+
+
+
+
+
 	public static Connection getConnection() {
 		if (connection != null) {
 			return connection;
@@ -32,16 +37,15 @@ public class DBManager {
 	}
 
 	public static void setInitUser() {
-		currentUser = "distlab1user";
+		currentUser = DbUsers.Customer;
 	}
 
 	protected static void setUserPrivilege(Privilege privilege)  {
 		String loginUser;
 		switch (privilege){
-			case ADMIN: loginUser = "distlab1admin"; break;
-			case STAFF: loginUser = "distlab1user"; break;
-			case CUSTOMER: loginUser = "distlab1user"; break; //TODO: Fixa en till privilege
-			default: loginUser = "distlab1user"; break; // TODO: Customer privilege
+			case ADMIN: loginUser = DbUsers.Admin; break;
+			case STAFF: loginUser = DbUsers.Staff; break;
+			default: loginUser = DbUsers.Customer; break;
 		}
 		System.out.println(privilege + " " + loginUser);
 		currentUser = loginUser;

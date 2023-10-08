@@ -18,8 +18,8 @@ public class UserHandler {
 		return user;
 	}
 
-	public static boolean buyItems(Shoppingcart shoppingcart) throws SQLException {
-		return User.buyItems(shoppingcart);
+	public static boolean buyItems(User user) throws SQLException {
+		return User.buyItems(user);
 	}
 
 

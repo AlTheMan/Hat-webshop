@@ -14,6 +14,7 @@ import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 import com.example.Dist_sys_lab1_webshop.Model.User.Privilege;
 import com.example.Dist_sys_lab1_webshop.Model.User.User;
 import com.example.Dist_sys_lab1_webshop.Model.User.UserHandler;
+import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -37,7 +38,7 @@ import jakarta.servlet.annotation.*;
         "/addItemToShoppingCartFromIndex",
         "/buyItems",
         "/removeItemFromShoppingCartFromIndex",
-        "/goToShoppingcart",
+        "/shoppingCart",
         "/addItemToShoppingCartFromShoppingcartPage",
         "/removeItemFromShoppingCartFromShoppingcartPage",
         "/ordersPage",
@@ -51,9 +52,9 @@ public class ControllerServlet extends HttpServlet {
 
     public void init() {
 
-        DBManager.setInitUser(); //initerar användaren till read-only
-        //request.setAttribute("items", ItemHandler.getAllItems());
-        //request.getRequestDispatcher("index.jsp").forward(request, response);
+        DBManager.setInitUser();
+
+
     }
 
     @Override
@@ -62,6 +63,8 @@ public class ControllerServlet extends HttpServlet {
         response.setContentType("text/html");
 
         String path = request.getServletPath(); // Hämta sökvägen för den aktuella begäran
+
+        System.out.println(path);
         switch (path){
             case "/shoppingBasket":
                 response.sendRedirect("shoppingBasket.jsp");
@@ -96,7 +99,7 @@ public class ControllerServlet extends HttpServlet {
             case "/removeItemFromShoppingCartFromShoppingcartPage":
                 handleRemoveItemFromShoppingCartFromShoppingCartPage(request,response);
                 break;
-            case "/goToShoppingcart":
+            case "/shoppingCart":
                 handleGoToShoppingCart(request,response);
                 break;
             case "/ordersPage":
@@ -135,12 +138,14 @@ public class ControllerServlet extends HttpServlet {
     private void handleAddItemToShoppingCartFromIndex(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         handleAddItemToShoppingCartDefault(request, response);
         request.setAttribute("items", ItemHandler.getAllItemsFromDb());
-        request.getRequestDispatcher("index.jsp").forward(request, response);  // After adding the item, redirect back to index.jsp
+        response.sendRedirect("index.jsp");
+        //request.getRequestDispatcher("index.jsp").forward(request, response);  // After adding the item, redirect back to index.jsp
     }
     private void handleAddItemToShoppingCartFromShoppingCartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         handleAddItemToShoppingCartDefault(request, response);
         User user = getUserSession(request);
         request.setAttribute("shoppingcart", user.getShoppingcart());
+        //response.sendRedirect("shoppingcart.jsp");
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
     }
     private void handleAddItemToShoppingCartDefault(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -183,7 +188,7 @@ public class ControllerServlet extends HttpServlet {
         User user = getUserSession(request);
         if (user != null) {
             try{
-                if(UserHandler.buyItems(user.getShoppingcart())){
+                if(UserHandler.buyItems(user)){
                     user.getShoppingcart().emptyCart();
                     System.out.println("Purchase was sucessful!");
                 }
@@ -269,10 +274,20 @@ public class ControllerServlet extends HttpServlet {
     }
 
 
+    /**
+     * This method handles the request from the item admin page.
+     * The form needs to pass a parameter with the name action that holds the case to handle.
+     * @param request the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
+
     private void handleItemAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Handle Item");
         String action = request.getParameter("action");
         System.out.println(action);
+        // Action is null first time accessing the page so this will skip.
         if (action != null) {
             switch (action) {
                 case "updateItem": updateItem(request); break;
@@ -282,6 +297,7 @@ public class ControllerServlet extends HttpServlet {
             }
         }
 
+        // If user is admin the page will load
         if (checkAdmin(getUserSession(request))) {
             request.setAttribute("images", ImageHelper.getImageNames());
             request.setAttribute("items", ItemHandler.getAllItemsFromDb());
@@ -289,7 +305,15 @@ public class ControllerServlet extends HttpServlet {
        }
     }
 
-    private void updateItem(HttpServletRequest request) { //TODO: skriv om till en klass i itemhandler
+    /**
+     * This method loops through all the parameter names and
+     * maps them with the parameter values. It only adds the names and params
+     * if the value is not an empty string.
+     * Then it calls the proper itemhandler method and passes the values.
+     * @param request the request from the jsp-page
+     */
+
+    private void updateItem(HttpServletRequest request) {
         HashMap<String, String> values = new HashMap<>();
         Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
@@ -301,6 +325,13 @@ public class ControllerServlet extends HttpServlet {
         ItemHandler.updateItem(values);
     }
 
+    /**
+     * This method loops through all the parameter names and
+     * maps them with the parameter values. If any of the names has
+     * an empty value it returns. Can only add an item with all fields.
+     * If all fields are present, it calls the proper Itemhandler method.
+     * @param request
+     */
     private void addItem(HttpServletRequest request) {
         HashMap<String, String> values = mapAllParameterValues(request);
         for (String value : values.values()) {
@@ -311,6 +342,10 @@ public class ControllerServlet extends HttpServlet {
 
     }
 
+    /**
+     * This method handles the removal of an item if that item exists in the database.
+     * @param request the request from the jsp-page
+     */
     private void removeItemById(HttpServletRequest request) {
         String stringId = request.getParameter("itemId");
         if (stringId == null) return;
@@ -328,12 +363,21 @@ public class ControllerServlet extends HttpServlet {
     public void destroy() {
     }
 
+    /**
+     * returns the current user session
+     * @param request the HttpServletRequest
+     * @return a session user.
+     */
     private User getUserSession(HttpServletRequest request){
         HttpSession session = request.getSession();
         return (User) session.getAttribute("user");
     }
 
-
+    /**
+     * Checks if the user passed is of ADMIN-privilege
+     * @param user the user to check
+     * @return true if admin, false if not
+     */
     private boolean checkAdmin(User user) {
         if (user == null) return false;
 	    return user.getPrivilege() == Privilege.ADMIN;

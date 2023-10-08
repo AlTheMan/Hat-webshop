@@ -1,10 +1,16 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
+import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 import com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart;
+import com.example.Dist_sys_lab1_webshop.Model.User.User;
+import com.mysql.cj.log.Log;
 
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Logger;
 
 
 public class ItemDB extends Item {
@@ -57,32 +63,77 @@ public class ItemDB extends Item {
 		return item;
 	}
 
-	public static boolean removeQuantityDBItemByID(Shoppingcart shoppingcart) throws SQLException{
+	public static boolean addUserOrder(User user) {
+		Shoppingcart shoppingcart = user.getShoppingcart();
 		Connection con = DBManager.getConnection();
-		Item item = null;
-		String sql = "UPDATE item SET quantity = quantity - ? WHERE id = ?;";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
+		// Updates the item quantity
+		String itemSql = "UPDATE item SET quantity = quantity - ? WHERE id = ?;";
+		// Inserts the order into the order table
+		String ordersSql = "INSERT INTO orders (customer_name, order_date, status, shipping_address) VALUES (?, ?, ?, ?)";
+		// Inserts item into the order_items table
+		String order_itemsSql = "INSERT INTO order_items (order_id, item_id, quantity) VALUES (?, ?, ?)";
+		// Gets the order_id to be inserted into the order_items table
+		String getOrderIdSql = "SELECT order_id from orders where customer_name = ?";
+
+		try {
+			PreparedStatement itemStatement = con.prepareStatement(itemSql);
+			PreparedStatement order_itemsStatement = con.prepareStatement(order_itemsSql);
+			PreparedStatement orderStatement = con.prepareStatement(ordersSql);
+			PreparedStatement getOrderId = con.prepareStatement(getOrderIdSql);
+
 			con.setAutoCommit(false);  // Start transaction
+			// Inserts into the order table
+			orderStatement.setString(1, user.getUserName());
+			orderStatement.setDate(2, Date.valueOf(LocalDate.now()));
+			orderStatement.setString(3, String.valueOf(OrderStatus.PENDING));
+			orderStatement.setString(4, "ShippingAddress");
+			orderStatement.executeUpdate();
+
+			// Gets the order-id for order_items table insert
+			getOrderId.setString(1, user.getUserName());
+			ResultSet rs = getOrderId.executeQuery();
+			String order_id = null;
+			while(rs.next()) {
+				order_id = rs.getString(1);
+			}
+
 			for(int i=0; i<shoppingcart.getItems().size(); i++){
-				//int quantity = shoppingcart.getItems().get(i).getNrOfItems();
-				//int id = shoppingcart.getItems().get(i).getItem().getId();
-				//System.out.println("index,i: "+ i+", quantity: "+quantity+", id: " + id);
-				statement.setInt(1, shoppingcart.getItems().get(i).getNrOfItems());
-				statement.setInt(2, shoppingcart.getItems().get(i).getItem().getId());
+				int itemId = shoppingcart.getItems().get(i).getItem().getId();
+				int itemQuantity = shoppingcart.getItems().get(i).getNrOfItems();
 
-				statement.executeUpdate();
-				//Statement stmt = connection.createStatement();
-				//stmt.executeUpdate("UPDATE table1 SET column1 = value1 WHERE condition1");
-				//stmt.executeUpdate("UPDATE table2 SET column2 = value2 WHERE condition2");
+				// Inserts the item in the order_items table
+				order_itemsStatement.setInt(1, Integer.parseInt(order_id));
+				order_itemsStatement.setInt(2, itemId);
+				order_itemsStatement.setInt(3, itemQuantity);
+				order_itemsStatement.executeUpdate();
 
+				// Updates the quantity in the item table
+				itemStatement.setInt(1, itemQuantity);
+				itemStatement.setInt(2, itemId);
+				itemStatement.executeUpdate();
 			}
 
 
-			con.commit();  // Commit the transaction
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			try {
+				con.rollback();
+				con.setAutoCommit(true);
+				System.out.println("Rollback!");
+			} catch (SQLException ex) {
+				e.printStackTrace();
+			}
+			return false;
 		}
+
 		finally {
-			con.setAutoCommit(true);  // End the transaction and set the connection back to default mode
+			try {
+				con.setAutoCommit(true);  // End the transaction and set the connection back to default mode
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return true; //Kolla om detta returnerar true endast vid success.
 	}

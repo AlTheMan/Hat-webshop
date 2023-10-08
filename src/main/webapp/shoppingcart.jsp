@@ -6,10 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.example.Dist_sys_lab1_webshop.Model.Item.Item" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.ShoppingItem" %>
-<%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.ShoppingItem" %>
 <%@ page import="com.example.Dist_sys_lab1_webshop.Model.User.Shoppingcart" %>

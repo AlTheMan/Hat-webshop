@@ -25,7 +25,7 @@
             <p><%= o.getCustomerName() %></p>
             <p><%= o.getOrderDate() %></p>
             <p><%= o.getOrderStatus() %></p>
-            <p><%= o.getShippingaddress() %></p>
+            <p><%= o.getShippingAddress() %></p>
             <% ArrayList<OrderItem> orderitems = o.getOrderItems();
                 for(OrderItem i: orderitems){ %>
             <p> id: <%= i.getItem().getId() %>, <%= i.getItem().getName() %>, Amount Bought:<%= i.getNrOfItems() %></p>

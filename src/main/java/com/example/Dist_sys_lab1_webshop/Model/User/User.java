@@ -92,8 +92,8 @@ public class User {
 	public Shoppingcart getShoppingcart(){
 		return shoppingcart;
 	}
-	public static boolean buyItems(Shoppingcart shoppingcart) throws SQLException {
-		return ItemDB.removeQuantityDBItemByID(shoppingcart);
+	public static boolean buyItems(User user) {
+		return ItemDB.addUserOrder(user);
 	}
 
 	public String getEmail() {

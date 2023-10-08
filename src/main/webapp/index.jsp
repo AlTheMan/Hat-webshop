@@ -28,7 +28,7 @@
 </div>
 <div class="grid-container-header">
     <div class = "image-header">
-        <form method="post" action="goToShoppingcart">
+        <form method="post" action="shoppingCart">
             <input type="image" src="images/basket.png"  width="100px" value="Shoppingcart">
         </form>
     </div>
@@ -62,10 +62,7 @@
     <br>
     <br>
     <br>
-    <form method="post" action="ordersPage">
-        <input type="hidden" name="action" value="remove">
-        <input type="submit" value="orders">
-    </form>
+
     <br>
     <form method="post" action="hatPage">
         <input type="hidden" name="action" value="remove">
@@ -79,16 +76,27 @@
     <br>
     <br>
 
+
+
     <% User user = (User) session.getAttribute("user");
 	if (user != null) {
         System.out.println(user.getPrivilege());
-		if (user.getPrivilege() == Privilege.ADMIN) { %>
-    <form method="post" action="userAdmin">
-        <input type="submit" value="Manage users">
+		if (user.getPrivilege() != Privilege.CUSTOMER) { %>
+    <form method="post" action="ordersPage">
+        <input type="hidden" name="action" value="remove">
+        <label>Admin/Staff only: <input type="submit" value="Manage orders"></label>
     </form>
+    <% }
+		if (user.getPrivilege() == Privilege.ADMIN) { %>
+    <div class="item-card">
+    <form method="post" action="userAdmin">
+        <label>Admin only: <input type="submit" value="Manage users"></label>
+    </form>
+
     <form method="post" action="itemAdmin">
         <input type="submit" value="Manage items">
     </form>
+    </div>
        <% }
     }
     %>
@@ -108,7 +116,7 @@
 <div class ="footer">
     <% user = (User) session.getAttribute("user");
      if (user != null) { %>
-    <p> Logged in as: <%= user.getUserName()%>!</p>
+    <p> Logged in as: <%= user.getUserName()%>, <%=user.getPrivilege()%> privilege.</p>
     <%}%>
 
     <p>Dagens datum: <%= new java.util.Date() %></p>

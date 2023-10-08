@@ -50,7 +50,7 @@ public class Order {
         return orderDate;
     }
 
-    public String getShippingaddress() {
+    public String getShippingAddress() {
         return shippingaddress;
     }
 
