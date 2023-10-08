@@ -72,8 +72,7 @@ public class ControllerServlet extends HttpServlet {
             case "/hatPage":
                 response.sendRedirect("hatPage.jsp");
                 break;
-            case "/login":
-                handleLogin(request, response);
+            case "/login": handleLogin(request, response);
                 break;
             case "/userAdmin":
                 handleAdmin(request, response);
@@ -258,9 +257,57 @@ public class ControllerServlet extends HttpServlet {
         UserHandler.updateUser(values);
     }
 
-    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
+    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String action = request.getParameter("action");
+        System.out.println(action);
+        if (action != null) {
+            switch (action){
+                case "loginUser": loginUser(request, response); break;
+                case "createUser": createUser(request, response); break;
+                case "logoutUser": logoutUser(request, response); break;
+                case "userCreation": userCreation(request, response); break;
+            }
+
+
+
+        }
+
+
+    }
+
+    private void userCreation(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        HashMap<String, String> values = mapAllParameterValues(request);
+        UserHandler.addUser(values);
+
+        loginUser(request, response);
+    }
+
+    private void logoutUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        UserHandler.setInitUser();
+        response.sendRedirect("index.jsp");
+    }
+
+    private void createUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        User user = getUserSession(request);
+
+        if (user == null) {
+            System.out.println("Create user");
+            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+        } else {
+          response.sendRedirect("index.jsp");
+        }
+
+
+    }
+
+    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //response.setHeader("Refresh", "1; index.jsp");
+        String name = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(name + " " + password);
         User user = UserHandler.authenticateUser(name, password);
         if (user != null) {
             HttpSession session = request.getSession();

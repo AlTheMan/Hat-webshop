@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBManager {
+class DBManager {
 
 	private static String  url = "jdbc:mysql://localhost:3306/dist1";
 	private static String currentUser = DbUsers.Customer;
@@ -18,7 +18,7 @@ public class DBManager {
 
 
 
-	public static Connection getConnection() {
+	protected static Connection getConnection() {
 		if (connection != null) {
 			return connection;
 		}

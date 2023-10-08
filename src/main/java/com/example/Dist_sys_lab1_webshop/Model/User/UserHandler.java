@@ -22,6 +22,10 @@ public class UserHandler {
 		return User.buyItems(user);
 	}
 
+	public static void setInitUser(){
+		User.setLowestDbPrivilege();
+	}
+
 
 	public static List<User> getAllUsers(){
 		return User.getAllUsersFromDB(); //TODO: ska kopia göras?

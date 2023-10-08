@@ -87,6 +87,7 @@ public class User {
 	}
 
 	protected static void addUserToDB(String username, String password, String privilege, String email, String address){
+
 		UserDB.addUserToDB(username, password, privilege, email, address);
 	}
 
@@ -115,6 +116,12 @@ public class User {
 		user.shoppingcart=new ShoppingCart();
 		return user;
 	}
+
+
+	public static void setLowestDbPrivilege() {
+		UserDB.setLowestDbPrivilege();
+	}
+
 	public ShoppingCart getShoppingcart(){
 		return shoppingcart;
 	}

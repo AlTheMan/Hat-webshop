@@ -105,6 +105,10 @@ public class UserDB extends User {
 
 	}
 
+	public static void setLowestDbPrivilege() {
+		DBManager.setInitUser();
+	}
+
 	public static void updateUserInDB(int userId, String privilege, String email, String address) {
 		con = DBManager.getConnection();
 		System.out.println(address);

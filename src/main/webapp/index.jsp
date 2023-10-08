@@ -101,24 +101,37 @@
     }
     %>
 
-
+    <%
+        //User user = session.getAttribute("user");
+        boolean loggedIn = session.getAttribute("user") != null;
+    %>
 
 
     <br>
     <div class="container">
+        <% if (!loggedIn) {  %>
         <form method= "post" action="login">
-            Username:<label><input type="text" name="name"></label><br>
+            Username:<label><input type="text" name="username"></label><br>
             Password:<label><input type="password" name="password"></label><br>
-            <input type="submit" value="login">
+            <input type="hidden" value="loginUser" name="action">
+            <input type="submit" value="Login">
         </form>
+        <form method="post" action="login">
+            <input type="submit" value="Create user">
+            <input type="hidden" value="createUser" name="action">
+        </form>
+        <% } else { %>
+        <p> Logged in as: <%= user.getUserName()%>, <%=user.getPrivilege()%>.</p>
+        <form method="post" action="login">
+            <input type="submit" value="Logout">
+            <input type="hidden" value="logoutUser" name="action">
+        </form>
+
+        <% }%>
+
     </div>
 </div>
 <div class ="footer">
-    <% user = (User) session.getAttribute("user");
-     if (user != null) { %>
-    <p> Logged in as: <%= user.getUserName()%>, <%=user.getPrivilege()%> privilege.</p>
-    <%}%>
-
     <p>Dagens datum: <%= new java.util.Date() %></p>
 </div>
 </body>
