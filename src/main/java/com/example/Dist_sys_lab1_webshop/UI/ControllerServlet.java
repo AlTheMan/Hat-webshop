@@ -332,6 +332,7 @@ public class ControllerServlet extends HttpServlet {
         HashMap<String, String> values = mapAllParameterValues(request);
         for (String value : values.values()) {
             if (value.isEmpty()) return;
+            System.out.println(value.toString());
         }
 
         ItemHandler.addItemToDb(values);

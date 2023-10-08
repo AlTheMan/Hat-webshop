@@ -181,8 +181,8 @@ public class ItemDB extends Item {
 	public static void addItemToDB(Item item) {
 		Connection connection = DBManager.getConnection();
 
-		String sql = "INSERT INTO item (name, description, price, quantity, imagesrc) " +
-				"VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO item (name, description, price, quantity, imagesrc, category) " +
+				"VALUES (?, ?, ?, ?, ?, ?)";
 
 		try(PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setString(1, item.getName());
@@ -190,6 +190,7 @@ public class ItemDB extends Item {
 			statement.setDouble(3, item.getPrice());
 			statement.setInt(4, item.getQuantity());
 			statement.setString(5, item.getImagesrc());
+			statement.setString(6, item.getCategory());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

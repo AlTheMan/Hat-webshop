@@ -45,6 +45,7 @@ public class ItemHandler {
 		item.setName(values.get("itemName"));
 		item.setDescription(values.get("descriptionName"));
 		item.setImagesrc(values.get("itemIMG"));
+		item.setCategory(values.get("itemCategory"));
 
 		String quantityString = values.get("itemQuantity");
 		String priceString = values.get("itemPrice");
