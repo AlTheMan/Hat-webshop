@@ -185,17 +185,8 @@ public class ControllerServlet extends HttpServlet {
     private void handleBuyItems(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
-            try{
-                if(UserHandler.buyItems(user)){
-                    user.getShoppingcart().emptyCart();
-                    System.out.println("Purchase was sucessful!");
-                }
-            } catch (SQLException e) {
-                System.out.println("Purchase was not successful");
-                user.getShoppingcart().emptyCart();
-                //throw new RuntimeException(e);
-            }
-
+            UserHandler.buyItems(user);
+            user.getShoppingcart().emptyCart();
         }
         // After adding the item, redirect back to shoppingcart.jsp
         request.setAttribute("user", user);

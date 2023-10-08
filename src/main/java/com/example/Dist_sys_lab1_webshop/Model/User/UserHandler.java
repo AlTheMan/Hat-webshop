@@ -18,7 +18,7 @@ public class UserHandler {
 		return user;
 	}
 
-	public static boolean buyItems(User user) throws SQLException {
+	public static boolean buyItems(User user) {
 		return User.buyItems(user);
 	}
 
