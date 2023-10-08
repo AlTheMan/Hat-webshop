@@ -13,8 +13,8 @@ import java.util.*;
 
 public class ItemDB extends Item {
 
-	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc) {
-		super(id, name, description, price, quantity, imagesrc);
+	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, String category) {
+		super(id, name, description, price, quantity, imagesrc, category);
 	}
 
 	public static ArrayList<Item> getDBItemsAll() {
@@ -31,7 +31,8 @@ public class ItemDB extends Item {
 				double price = resultSet.getDouble("price");
 				int quantity = resultSet.getInt("quantity");
 				String imagesrc = resultSet.getString("imagesrc");
-				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc));
+				String category= resultSet.getString("category");
+				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc, category));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,7 +53,8 @@ public class ItemDB extends Item {
 					double price = resultSet.getDouble("price");
 					int quantity = resultSet.getInt("quantity");
 					String imagesrc = resultSet.getString("imagesrc");
-					item = new ItemDB(id, name, description, price, quantity, imagesrc);
+					String category = resultSet.getString("category");
+					item = new ItemDB(id, name, description, price, quantity, imagesrc, category);
 				}
 			}
 		} catch (SQLException e) {
@@ -140,6 +142,10 @@ public class ItemDB extends Item {
 			if (item.getImagesrc() != null) {
 				updateFields.add("imagesrc = ?");
 				parameters.add(item.getImagesrc());
+			}
+			if (item.getCategory() != null) {
+				updateFields.add("category = ?");
+				parameters.add(item.getCategory());
 			}
 
 			if (updateFields.isEmpty()) {

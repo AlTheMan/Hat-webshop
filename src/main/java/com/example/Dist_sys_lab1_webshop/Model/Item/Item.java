@@ -13,26 +13,29 @@ public class Item {
 	private double price;
 	private int quantity;
 	private String imagesrc;
+	private String category;
 
 
-	protected Item(int id, String name, String description, double price, int quantity, String imagesrc) {
+	protected Item(int id, String name, String description, double price, int quantity, String imagesrc, String category) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
 		this.imagesrc=imagesrc;
+		this.category=category;
 	}
 
 
 
 
-	protected Item(String name, String description, double price, int quantity, String imagesrc) {
+	protected Item(String name, String description, double price, int quantity, String imagesrc, String category) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
 		this.imagesrc = imagesrc;
+		this.category=category;
 	}
 
 	protected Item() {
@@ -64,6 +67,14 @@ public class Item {
 
 	public static Collection<Item> getDBItemsWithCategory(String category) throws NoSuchMethodException {
 		throw new NoSuchMethodException();
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getCategory() {
+		return category;
 	}
 
 	public static ArrayList<Item> getDBItemsAll() {

@@ -80,7 +80,8 @@ public class OrderDB extends Order {
                         double price = itemResultSet.getDouble("price");
                         int itemQuantity = itemResultSet.getInt("quantity");
                         String imagesrc = itemResultSet.getString("imagesrc");
-                        itemDB= new ItemDB(itemId, itemName, description, price, itemQuantity, imagesrc);
+                        String category = itemResultSet.getString("category");
+                        itemDB= new ItemDB(itemId, itemName, description, price, itemQuantity, imagesrc, category);
 
                         System.out.println("\t\tItem Name: " + itemName);
                     }
