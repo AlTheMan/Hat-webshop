@@ -93,15 +93,9 @@
     }
     %>
 
-    <%
-        //User user = session.getAttribute("user");
-        boolean loggedIn = session.getAttribute("user") != null;
-    %>
-
-
     <br>
     <div class="container">
-        <% if (!loggedIn) {  %>
+        <% if (user == null) {  %>
         <form method= "post" action="login">
             Username:<label><input type="text" name="username"></label><br>
             Password:<label><input type="password" name="password"></label><br>
