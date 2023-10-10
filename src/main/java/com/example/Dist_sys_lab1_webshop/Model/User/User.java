@@ -29,6 +29,18 @@ public class User {
 		this(username,password,email,privilege,id,new ShoppingCart(), address);
 	}
 
+	public static User getCopy(User user) {
+		User copy = new User();
+		copy.id = user.id;
+		copy.password = user.password;
+		copy.userName = user.userName;
+		copy.address = user.address;
+		copy.email = user.email;
+		copy.privilege = user.privilege;
+		copy.shoppingcart = ShoppingCart.getCopy(user.shoppingcart);
+		return copy;
+	}
+
 
 	public User(String username, String email, Privilege privilege, int id, String address){
 		this.userName = username;
@@ -36,7 +48,7 @@ public class User {
 		this.privilege = privilege;
 		this.id = id;
 		this.password = "******";
-		this.shoppingcart=new ShoppingCart();
+		this.shoppingcart = new ShoppingCart();
 		this.address = address;
 	}
 
@@ -106,14 +118,14 @@ public class User {
 			return null;
 		}
 
-		User user = new User();
-		user.id = dbUser.id;
+		User user = getCopy(dbUser);
+		/*user.id = dbUser.id;
 		user.userName = dbUser.userName;
 		user.email = dbUser.email;
 		user.privilege = dbUser.privilege;
-		user.password = "********";
 		user.address = dbUser.address;
-		user.shoppingcart=new ShoppingCart();
+		user.shoppingcart=new ShoppingCart();*/
+		user.password = "********";
 		return user;
 	}
 

@@ -41,6 +41,16 @@ public class ShoppingCart {
         }
     }
 
+    public static ShoppingCart getCopy(ShoppingCart cart) {
+        ArrayList<ShoppingItem> shoppingItems = cart.getItems();
+        ShoppingCart cartCopy = new ShoppingCart();
+        for (ShoppingItem item : shoppingItems) {
+            ShoppingItem cpy = ShoppingItem.getCopy(item);
+            cartCopy.items.add(cpy);
+        }
+        return cartCopy;
+    }
+
     @Override
     public String toString() {
         return "Shoppingcart: " + items;

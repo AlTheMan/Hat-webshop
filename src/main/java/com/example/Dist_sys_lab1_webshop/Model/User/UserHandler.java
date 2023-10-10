@@ -4,6 +4,7 @@ import com.example.Dist_sys_lab1_webshop.Model.User.User;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,7 +29,13 @@ public class UserHandler {
 
 
 	public static List<User> getAllUsers(){
-		return User.getAllUsersFromDB(); //TODO: ska kopia göras?
+		List<User> users = User.getAllUsersFromDB();
+		List<User> userCopy = new ArrayList<>();
+		for (User user : users) {
+			userCopy.add(User.getCopy(user));
+		}
+
+		return userCopy;
 	}
 
 	public static void addUser(HashMap<String, String> values) {

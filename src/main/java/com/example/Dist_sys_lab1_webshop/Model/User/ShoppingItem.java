@@ -15,6 +15,10 @@ public class ShoppingItem {
         this.nrOfItems = nrOfItems;
     }
 
+    public static ShoppingItem getCopy(ShoppingItem shoppingItem) {
+        return new ShoppingItem(Item.getCopy(shoppingItem.item), shoppingItem.nrOfItems);
+    }
+
     public Item getItem() {
         return item;
     }

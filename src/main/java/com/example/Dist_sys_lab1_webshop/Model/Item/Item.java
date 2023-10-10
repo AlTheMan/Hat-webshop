@@ -139,6 +139,16 @@ public class Item {
 		return imagesrc;
 	}
 
+	public static Item getCopy(Item item){
+		Item copy = new Item();
+		copy.id = item.id;
+		copy.name = item.name;
+		copy.quantity = item.quantity;
+		copy.price = item.price;
+		copy.category = Category.getCategoryCopy(item.category);
+		return copy;
+	}
+
 
 
 }
