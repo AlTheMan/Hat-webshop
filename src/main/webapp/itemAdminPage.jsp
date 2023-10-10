@@ -50,7 +50,7 @@ if (items != null) { %>
 <div class="grid-container">
     <% for (Item item : items) { %>
     <div class="item-card">
-        <img src="images/hat/<%= item.getImagesrc() %>" alt="<%= item.getName() %> Image">
+        <img src="images/hat/<%= item.getImageSrc() %>" alt="<%= item.getName() %> Image">
         <h3><%= item.getName() %></h3>
         <p><%= item.getDescription() %></p>
         <p>Price: <%= item.getPrice() %></p>

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class ImageHelper {
 
-
-
 	public static ArrayList<String> getImageNames(){
 		ArrayList<String> names = new ArrayList<>();
 		for (int i = 1; i <= 20; i++)

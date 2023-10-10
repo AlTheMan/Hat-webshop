@@ -16,9 +16,6 @@ public class Category {
     public static Category getCategoryCopy(Category category){
 	    return new Category(category.category, category.categoryId);
     }
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;

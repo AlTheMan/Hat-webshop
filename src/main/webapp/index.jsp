@@ -47,7 +47,7 @@
 
         <% int noOfItems = 0; int itemDiff = 0; for (Item item : shopItems) { %>
         <div class="item-card">
-            <img src="images/hat/<%= item.getImagesrc() %>" alt="<%= item.getName() %> Image">
+            <img src="images/hat/<%= item.getImageSrc() %>" alt="<%= item.getName() %> Image">
             <h3><%= item.getName() %></h3>
             <p><%= item.getDescription() %></p>
             <p>Price: <%= item.getPrice() %></p>

@@ -51,6 +51,8 @@ public class ShoppingCart {
         return 0;
     }
 
+
+
     public double getTotalPrice(){
         double total = 0;
 

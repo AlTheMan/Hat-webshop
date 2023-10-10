@@ -35,7 +35,7 @@
                 if(s.getNrOfItems()!=0){
                 %>
                     <div class="item-card">
-                        <img src="images/hat/<%= s.getItem().getImagesrc() %>" alt="<%= s.getItem().getName() %> Image">
+                        <img src="images/hat/<%= s.getItem().getImageSrc() %>" alt="<%= s.getItem().getName() %> Image">
                         <h3><%= s.getItem().getName() %></h3>
                         <p><%= s.getItem().getDescription() %></p>
                         <p>Price: <%= s.getItem().getPrice() * s.getNrOfItems() %></p>

@@ -48,7 +48,6 @@ class DBManager {
 			case STAFF: loginUser = DbUsers.Staff; break;
 			default: loginUser = DbUsers.Customer; break;
 		}
-		System.out.println(privilege + " " + loginUser);
 		currentUser = loginUser;
 		try {
 			connection.close();
