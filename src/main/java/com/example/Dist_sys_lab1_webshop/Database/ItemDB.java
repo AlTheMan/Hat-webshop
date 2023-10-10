@@ -1,22 +1,17 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
 import com.example.Dist_sys_lab1_webshop.Model.Item.Category;
-import com.example.Dist_sys_lab1_webshop.Model.Item.CategoryHandler;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
-import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
-import com.example.Dist_sys_lab1_webshop.Model.User.ShoppingCart;
-import com.example.Dist_sys_lab1_webshop.Model.User.User;
+
 
 import java.sql.*;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
 
 
 public class ItemDB extends Item {
 
-	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, Category category) {
-		super(id, name, description, price, quantity, imagesrc, category);
+	ItemDB(int id, String name, String description, double price, int quantity, String imageSrc, Category category) {
+		super(id, name, description, price, quantity, imageSrc, category);
 	}
 
 
@@ -34,12 +29,11 @@ public class ItemDB extends Item {
 				String description = resultSet.getString("description");
 				double price = resultSet.getDouble("price");
 				int quantity = resultSet.getInt("quantity");
-				String imagesrc = resultSet.getString("imagesrc");
+				String imageSrc = resultSet.getString("imagesrc");
 				int categoryId = resultSet.getInt("categoryid");
 				String categoryName = resultSet.getString("category");
 				Category category = new Category(categoryName, categoryId);
-				System.out.println(categoryId + categoryName);
-				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc, category));
+				itemCollection.add(new ItemDB(id, name, description, price, quantity, imageSrc, category));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,11 +53,11 @@ public class ItemDB extends Item {
 					String description = resultSet.getString("description");
 					double price = resultSet.getDouble("price");
 					int quantity = resultSet.getInt("quantity");
-					String imagesrc = resultSet.getString("imagesrc");
-					int categoryid = resultSet.getInt("categoryid");
+					String imageSrc = resultSet.getString("imagesrc");
+					int categoryId = resultSet.getInt("categoryid");
 					String categoryName = resultSet.getString("category");
-					Category category = new Category(categoryName, categoryid);
-					item = new ItemDB(id, name, description, price, quantity, imagesrc, category);
+					Category category = new Category(categoryName, categoryId);
+					item = new ItemDB(id, name, description, price, quantity, imageSrc, category);
 				}
 			}
 		} catch (SQLException e) {
@@ -72,55 +66,6 @@ public class ItemDB extends Item {
 		return item;
 	}
 
-
-
-/*
-	public static void updateItemById(Item item)  {
-		Connection con = DBManager.getConnection();
-		String baseSQL = "UPDATE item SET";
-		int id = item.getId();
-		try {
-			con.setAutoCommit(false);
-			Statement statement = con.createStatement();
-
-			if (item.getName() != null) {
-				statement.executeUpdate(baseSQL + " name = '" +
-						item.getName() + "' WHERE id = " + id);
-			}
-			if (item.getDescription() != null) {
-				statement.executeUpdate(baseSQL + " description = '" +
-						item.getDescription() + "' WHERE id = " + id);
-			}
-			if(item.getPrice() > 0) {
-				statement.executeUpdate(baseSQL + " price = " +
-						item.getPrice() + " WHERE id = " + id);
-			}
-			if (item.getQuantity() > -1) {
-				statement.executeUpdate(baseSQL + " quantity = " +
-						item.getQuantity() + " WHERE id = " + id);
-			}
-			if (item.getImagesrc() != null) {
-				statement.executeUpdate(baseSQL + " imagesrc = '" +
-						item.getImagesrc() + "' WHERE id = " + id);
-			}
-
-			con.commit();
-		} catch (SQLException e){
-			e.printStackTrace();
-			try {
-				con.rollback();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-		}
-		finally {
-			try {
-				con.setAutoCommit(true);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}*/
 
 	public static void updateItemByIdPrepared(Item item) {
 		Connection con = DBManager.getConnection();
@@ -148,9 +93,9 @@ public class ItemDB extends Item {
 				updateFields.add("quantity = ?");
 				parameters.add(item.getQuantity());
 			}
-			if (item.getImagesrc() != null) {
+			if (item.getImageSrc() != null) {
 				updateFields.add("imagesrc = ?");
-				parameters.add(item.getImagesrc());
+				parameters.add(item.getImageSrc());
 			}
 			if (item.getCategoryId() > -1) {
 				updateFields.add("categoryid = ?");
@@ -187,7 +132,7 @@ public class ItemDB extends Item {
 		}
 	}
 
-	public static void addItemToDB(Item item) {
+	public static boolean addItemToDB(Item item) {
 		Connection connection = DBManager.getConnection();
 
 		String sql = "INSERT INTO item (name, description, price, quantity, imagesrc, categoryid) " +
@@ -198,14 +143,13 @@ public class ItemDB extends Item {
 			statement.setString(2, item.getDescription());
 			statement.setDouble(3, item.getPrice());
 			statement.setInt(4, item.getQuantity());
-			statement.setString(5, item.getImagesrc());
+			statement.setString(5, item.getImageSrc());
 			statement.setInt(6, item.getCategoryId());
-			System.out.println("category ID in DB: " + item.getCategoryId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return true;
 	}
 
 

@@ -8,10 +8,15 @@ public class CategoryHandler {
 
     
     public static void addCategory(String category){
-        CategoryDB.addCategory(category);
+        if (category != null) {
+            CategoryDB.addCategory(category);
+        }
     }
 
-    public static void removeCategoryById(int id){
+    public static void removeCategoryById(String categoryId){
+        if (categoryId == null) return;
+
+        int id = Integer.parseInt(categoryId);
         CategoryDB.removeCategoryById(id);
     }
     public static ArrayList<Category> getCategories() {

@@ -44,7 +44,7 @@ public class ItemHandler {
 
 		item.setName(values.get("itemName"));
 		item.setDescription(values.get("descriptionName"));
-		item.setImagesrc(values.get("itemIMG"));
+		item.setImageSrc(values.get("itemIMG"));
 
 		//TODO: uppdatera item.setCategory() med värdet från item.getCategoryID(), som man gör en lookup på i databasen vilken kategori det ID:t motsvarar.
 
@@ -76,8 +76,11 @@ public class ItemHandler {
 	 * Add one item to the database
 	 * @param values a hashmap containing name and parameter of the item.
 	 */
-	public static void addItemToDb(HashMap<String, String> values) {
-		Item.addItemToDB(createItemFromHashmap(values));
+	public static boolean addItemToDb(HashMap<String, String> values) {
+		for (String value : values.values()) {
+			if (value.isEmpty()) return false;
+		}
+		return Item.addItemToDB(createItemFromHashmap(values));
 	}
 
 	/**

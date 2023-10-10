@@ -1,6 +1,6 @@
 package com.example.Dist_sys_lab1_webshop.Model.Order;
 
-import com.example.Dist_sys_lab1_webshop.Database.OrderDB;
+import com.example.Dist_sys_lab1_webshop.Model.User.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,5 +21,9 @@ public class OrderHandler {
         Order.updateStatusOfOrder(orderStatus, orderID);
 
         //order.setOrderStatus(orderStatus); //TODO: borde kolla om statusen ändras i databsen.
+    }
+
+    public static boolean buyItems(User user) {
+        return Order.addOrder(user);
     }
 }

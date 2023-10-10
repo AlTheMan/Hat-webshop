@@ -3,7 +3,6 @@ package com.example.Dist_sys_lab1_webshop.Model.Item;
 import com.example.Dist_sys_lab1_webshop.Database.ItemDB;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Item {
 
@@ -12,33 +11,27 @@ public class Item {
 	private String description;
 	private double price;
 	private int quantity;
-	private String imagesrc;
-	//private String category;
-	//private int categoryId;
-
+	private String imageSrc;
 	private Category category;
 
 
-	protected Item(int id, String name, String description, double price, int quantity, String imagesrc, Category category) {
+	protected Item(int id, String name, String description, double price, int quantity, String imageSrc, Category category) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.imagesrc=imagesrc;
+		this.imageSrc =imageSrc;
 		this.category=category;
 
 	}
-
-
-
 
 	protected Item(String name, String description, double price, int quantity, String imagesrc, Category category) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.imagesrc = imagesrc;
+		this.imageSrc = imagesrc;
 		this.category=category;
 	}
 
@@ -74,12 +67,8 @@ public class Item {
 		this.quantity = quantity;
 	}
 
-	public void setImagesrc(String imagesrc) {
-		this.imagesrc = imagesrc;
-	}
-
-	public static Collection<Item> getDBItemsWithCategory(String category) throws NoSuchMethodException {
-		throw new NoSuchMethodException();
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 
 	public void setCategory(Category category) {
@@ -115,8 +104,8 @@ public class Item {
 		ItemDB.updateItemByIdPrepared(updateItem);
 	}
 
-	protected static void addItemToDB(Item item) {
-		ItemDB.addItemToDB(item);
+	protected static boolean addItemToDB(Item item) {
+		return ItemDB.addItemToDB(item);
 	}
 
 	protected static void removeItemById(int id) {
@@ -135,8 +124,8 @@ public class Item {
 		return quantity;
 	}
 
-	public String getImagesrc() {
-		return imagesrc;
+	public String getImageSrc() {
+		return imageSrc;
 	}
 
 	public static Item getCopy(Item item){
@@ -146,7 +135,7 @@ public class Item {
 		copy.description = item.description;
 		copy.quantity = item.quantity;
 		copy.price = item.price;
-		copy.imagesrc = item.imagesrc;
+		copy.imageSrc = item.imageSrc;
 		copy.category = Category.getCategoryCopy(item.category);
 		return copy;
 	}

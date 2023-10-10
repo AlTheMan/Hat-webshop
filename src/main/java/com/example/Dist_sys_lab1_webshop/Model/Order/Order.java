@@ -1,6 +1,7 @@
 package com.example.Dist_sys_lab1_webshop.Model.Order;
 
 import com.example.Dist_sys_lab1_webshop.Database.OrderDB;
+import com.example.Dist_sys_lab1_webshop.Model.User.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,4 +78,10 @@ public class Order {
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+    public static boolean addOrder(User user) {
+        return OrderDB.addOrder(user);
+    }
+
+
 }

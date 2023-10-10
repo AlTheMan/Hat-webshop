@@ -1,6 +1,5 @@
 package com.example.Dist_sys_lab1_webshop.Model.User;
 
-import com.example.Dist_sys_lab1_webshop.Database.ItemDB;
 import com.example.Dist_sys_lab1_webshop.Database.UserDB;
 
 import java.util.ArrayList;
@@ -131,9 +130,7 @@ public class User {
 	public ShoppingCart getShoppingcart(){
 		return shoppingcart;
 	}
-	public static boolean buyItems(User user) {
-		return UserDB.addUserOrder(user);
-	}
+
 
 	public String getEmail() {
 		return email;
@@ -151,11 +148,4 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }

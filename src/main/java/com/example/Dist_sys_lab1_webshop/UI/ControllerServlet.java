@@ -1,7 +1,6 @@
 package com.example.Dist_sys_lab1_webshop.UI;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -23,9 +22,6 @@ import jakarta.servlet.annotation.*;
  * All interaktion med JSP-sidorna ska gå via denna
  *
  */
-
-
-
 
 @WebServlet(name = "ControllerServlet", value = {
 
@@ -61,7 +57,6 @@ public class ControllerServlet extends HttpServlet {
 
         String path = request.getServletPath(); // Hämta sökvägen för den aktuella begäran
 
-        System.out.println(path);
         switch (path){
             case "/shoppingBasket":
                 response.sendRedirect("shoppingBasket.jsp");
@@ -108,6 +103,11 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Fetches the items for the start page (Called from the index page)
+     * @param request HttpServletRequest
+     */
+
     public static void getInitItems(HttpServletRequest request){
         request.setAttribute("items", ItemHandler.getAllItemsFromDb());
     }
@@ -126,58 +126,51 @@ public class ControllerServlet extends HttpServlet {
     private void handleGoToShoppingCart(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
-            System.out.println(user.getAddress());
-            System.out.println(user.getId());
             request.setAttribute("user", user);
             request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);
         }
     }
 
-    private void handleAddItemToShoppingCartFromIndex(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        handleAddItemToShoppingCartDefault(request, response);
+    private void handleAddItemToShoppingCartFromIndex(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        handleAddItemToShoppingCartDefault(request);
         request.setAttribute("items", ItemHandler.getAllItemsFromDb());
         response.sendRedirect("index.jsp");
         //request.getRequestDispatcher("index.jsp").forward(request, response);  // After adding the item, redirect back to index.jsp
     }
     private void handleAddItemToShoppingCartFromShoppingCartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        handleAddItemToShoppingCartDefault(request, response);
+        handleAddItemToShoppingCartDefault(request);
         User user = getUserSession(request);
         request.setAttribute("user", user);
-        //response.sendRedirect("shoppingcart.jsp");
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
     }
-    private void handleAddItemToShoppingCartDefault(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void handleAddItemToShoppingCartDefault(HttpServletRequest request) {
         User user = getUserSession(request);
         if (user != null) {
             String stringItemId = request.getParameter("itemId");
             int itemId = Integer.parseInt(stringItemId);
             Item item = ItemHandler.getItemByID(itemId);
             user.getShoppingcart().addItems(item, 1);
-            System.out.println(user.getShoppingcart().toString());
         }
     }
 
 
     private void handleRemoveItemFromShoppingCartFromShoppingCartPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        handleRemoveItemFromShoppingCartDefault(request,response);
+        handleRemoveItemFromShoppingCartDefault(request);
         User user = getUserSession(request);
         request.setAttribute("user", user);
         request.getRequestDispatcher("shoppingcart.jsp").forward(request, response);  // After adding the item, redirect back to shoppingcart.jsp
 
     }
     private void handleRemoveItemFromShoppingCartFromIndex(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        handleRemoveItemFromShoppingCartDefault(request,response);
+        handleRemoveItemFromShoppingCartDefault(request);
         request.setAttribute("items", ItemHandler.getAllItemsFromDb());
         request.getRequestDispatcher("index.jsp").forward(request, response); // After adding the item, redirect back to index.jsp
     }
-    private void handleRemoveItemFromShoppingCartDefault(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void handleRemoveItemFromShoppingCartDefault(HttpServletRequest request) {
         User user = getUserSession(request);
         if (user != null) {
             String stringItemId = request.getParameter("itemId");
-            int itemId = Integer.parseInt(stringItemId);
-            Item item = ItemHandler.getItemByID(itemId);
-            user.getShoppingcart().removeItems(item,1);
-            System.out.println(user.getShoppingcart().toString());
+            UserHandler.removeItemFromShoppingCart(stringItemId, user);
         }
     }
 
@@ -185,7 +178,7 @@ public class ControllerServlet extends HttpServlet {
     private void handleBuyItems(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = getUserSession(request);
         if (user != null) {
-            UserHandler.buyItems(user);
+            OrderHandler.buyItems(user);
             user.getShoppingcart().emptyCart();
         }
         // After adding the item, redirect back to shoppingcart.jsp
@@ -198,7 +191,6 @@ public class ControllerServlet extends HttpServlet {
     private void handleAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
         if (action != null){
-            System.out.println(action);
             switch (action) {
                 case "addUser": addUser(request); break;
                 case "editUser": editUser(request); break;
@@ -214,44 +206,23 @@ public class ControllerServlet extends HttpServlet {
         }
     }
     private void addUser(HttpServletRequest request){
-        HashMap<String, String> values = new HashMap<>();
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()){
-            String name = parameterNames.nextElement();
-            String value = request.getParameter(name);
-            System.out.println(name + " " + value);
-            values.put(name, value);
-        }
-        for (String v : values.values()){ // tittar att inga fält är tomma
-            if (v.compareTo("") == 0) return;
-        }
+        HashMap<String, String> values = mapAllParameterValues(request);
         UserHandler.addUser(values);
     }
 
 
     private void deleteUser(HttpServletRequest request) {
-        System.out.println("Delete User");
         String id = request.getParameter(USERID);
-        if (id == null) {
-            System.out.println("id was null");
-            return;
-        }
-        UserHandler.deleteUser(Integer.parseInt(id));
+        UserHandler.deleteUser(id);
     }
 
     private void editUser(HttpServletRequest request) {
-        String id = request.getParameter(USERID);
-        if (id == null) {
-            System.out.println("id was null");
-            return;
-        }
         HashMap<String, String> values = mapAllParameterValues(request);
         UserHandler.updateUser(values);
     }
 
     private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
-        System.out.println(action);
         if (action != null) {
             switch (action){
                 case "loginUser": loginUser(request, response); break;
@@ -259,18 +230,13 @@ public class ControllerServlet extends HttpServlet {
                 case "logoutUser": logoutUser(request, response); break;
                 case "userCreation": userCreation(request, response); break;
             }
-
-
-
         }
-
 
     }
 
     private void userCreation(HttpServletRequest request, HttpServletResponse response) throws IOException{
         HashMap<String, String> values = mapAllParameterValues(request);
         UserHandler.addUser(values);
-
         loginUser(request, response);
     }
 
@@ -282,24 +248,17 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void createUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         User user = getUserSession(request);
-
         if (user == null) {
-            System.out.println("Create user");
             request.getRequestDispatcher("createAccount.jsp").forward(request, response);
         } else {
           response.sendRedirect("index.jsp");
         }
-
-
     }
 
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //response.setHeader("Refresh", "1; index.jsp");
         String name = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(name + " " + password);
         User user = UserHandler.authenticateUser(name, password);
         if (user != null) {
             HttpSession session = request.getSession();
@@ -319,9 +278,7 @@ public class ControllerServlet extends HttpServlet {
      */
 
     private void handleItemAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Handle Item");
         String action = request.getParameter("action");
-        System.out.println(action);
         // Action is null first time accessing the page so this will skip.
         if (action != null) {
             switch (action) {
@@ -345,14 +302,11 @@ public class ControllerServlet extends HttpServlet {
 
     private void removeCategory(HttpServletRequest request) {
         String categoryId = request.getParameter("categoryId");
-        if (categoryId == null) return;
-        int id = Integer.parseInt(categoryId);
-        CategoryHandler.removeCategoryById(id);
+        CategoryHandler.removeCategoryById(categoryId);
     }
 
     private void addCategory(HttpServletRequest request) {
         String categoryName = request.getParameter("categoryName");
-        if (categoryName == null) return;
         CategoryHandler.addCategory(categoryName);
 
     }
@@ -366,33 +320,18 @@ public class ControllerServlet extends HttpServlet {
      */
 
     private void updateItem(HttpServletRequest request) {
-        HashMap<String, String> values = new HashMap<>();
-        Enumeration<String> paramNames = request.getParameterNames();
-        while (paramNames.hasMoreElements()) {
-            String name = paramNames.nextElement();
-            String value = request.getParameter(name);
-            if (!value.isEmpty())
-                values.put(name, value);
-        }
+        HashMap<String, String> values = mapNonEmptyParameterValues(request);
         ItemHandler.updateItem(values);
     }
 
     /**
      * This method loops through all the parameter names and
-     * maps them with the parameter values. If any of the names has
-     * an empty value it returns. Can only add an item with all fields.
-     * If all fields are present, it calls the proper Itemhandler method.
+     * maps them with the parameter values. Calls the proper Itemhandler method.
      * @param request
      */
     private void addItem(HttpServletRequest request) {
         HashMap<String, String> values = mapAllParameterValues(request);
-        for (String value : values.values()) {
-            if (value.isEmpty()) return;
-            System.out.println(value.toString());
-        }
-
         ItemHandler.addItemToDb(values);
-
     }
 
     /**
@@ -437,9 +376,9 @@ public class ControllerServlet extends HttpServlet {
     }
 
     /**
-     *
      * @param request the incoming servlet request
-     * @return a hashmap with parameter names mapped to values
+     * @return a hashmap with parameter names mapped to values.
+     * values may be empty
      */
     private HashMap<String, String> mapAllParameterValues(HttpServletRequest request) {
         HashMap<String, String> values = new HashMap<>();
@@ -448,6 +387,22 @@ public class ControllerServlet extends HttpServlet {
             String name = strings.nextElement();
             String value = request.getParameter(name);
             values.put(name, value);
+        }
+        return values;
+    }
+    /**
+     * @param request the incoming servlet request
+     * @return a hashmap with parameter names mapped to values.
+     * will not add empty values
+     */
+    private HashMap<String, String> mapNonEmptyParameterValues(HttpServletRequest request) {
+        HashMap<String, String> values = new HashMap<>();
+        Enumeration<String> paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements()) {
+            String name = paramNames.nextElement();
+            String value = request.getParameter(name);
+            if (!value.isEmpty())
+                values.put(name, value);
         }
         return values;
     }
