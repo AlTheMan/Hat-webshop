@@ -1,5 +1,6 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
+import com.example.Dist_sys_lab1_webshop.Model.Item.Category;
 import com.example.Dist_sys_lab1_webshop.Model.Order.Order;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderItem;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
@@ -81,8 +82,9 @@ public class OrderDB extends Order {
                         int itemQuantity = itemResultSet.getInt("quantity");
                         String imagesrc = itemResultSet.getString("imagesrc");
                         int categoryid = itemResultSet.getInt("categoryid");
-                        String category = itemResultSet.getString("category");
-                        itemDB= new ItemDB(itemId, itemName, description, price, itemQuantity, imagesrc, category, categoryid);
+                        String categoryName = itemResultSet.getString("category");
+                        Category category = new Category(categoryName, categoryid);
+                        itemDB= new ItemDB(itemId, itemName, description, price, itemQuantity, imagesrc, category);
 
                         System.out.println("\t\tItem Name: " + itemName);
                     }

@@ -56,7 +56,7 @@ if (items != null) { %>
         <p>Price: <%= item.getPrice() %></p>
         <p>Quantity: <%= item.getQuantity() %></p>
         <p>Item id: <%=item.getId()%></p>
-        <p>Category: <%=item.getCategory()%></p>
+        <p>Category: <%=item.getCategoryName()%></p>
         <form>
             <input type="hidden" value="<%=item.getId()%>" name="itemId">
             <input type="submit" value="Select">

@@ -1,6 +1,7 @@
 package com.example.Dist_sys_lab1_webshop.Database;
 
 import com.example.Dist_sys_lab1_webshop.Model.Item.Category;
+import com.example.Dist_sys_lab1_webshop.Model.Item.CategoryHandler;
 import com.example.Dist_sys_lab1_webshop.Model.Item.Item;
 import com.example.Dist_sys_lab1_webshop.Model.Order.OrderStatus;
 import com.example.Dist_sys_lab1_webshop.Model.User.ShoppingCart;
@@ -14,8 +15,8 @@ import java.util.*;
 
 public class ItemDB extends Item {
 
-	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, String category,int categoryId) {
-		super(id, name, description, price, quantity, imagesrc, category, categoryId);
+	ItemDB(int id, String name, String description, double price, int quantity, String imagesrc, Category category) {
+		super(id, name, description, price, quantity, imagesrc, category);
 	}
 
 
@@ -35,8 +36,10 @@ public class ItemDB extends Item {
 				int quantity = resultSet.getInt("quantity");
 				String imagesrc = resultSet.getString("imagesrc");
 				int categoryId = resultSet.getInt("categoryid");
-				String category= resultSet.getString("category");
-				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc, category, categoryId));
+				String categoryName = resultSet.getString("category");
+				Category category = new Category(categoryName, categoryId);
+				System.out.println(categoryId + categoryName);
+				itemCollection.add(new ItemDB(id, name, description, price, quantity, imagesrc, category));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,8 +61,9 @@ public class ItemDB extends Item {
 					int quantity = resultSet.getInt("quantity");
 					String imagesrc = resultSet.getString("imagesrc");
 					int categoryid = resultSet.getInt("categoryid");
-					String category = resultSet.getString("category");
-					item = new ItemDB(id, name, description, price, quantity, imagesrc, category, categoryid);
+					String categoryName = resultSet.getString("category");
+					Category category = new Category(categoryName, categoryid);
+					item = new ItemDB(id, name, description, price, quantity, imagesrc, category);
 				}
 			}
 		} catch (SQLException e) {

@@ -9,6 +9,10 @@ public class Category {
         this.categoryId = categoryId;
     }
 
+    protected Category(){
+
+    }
+
     public void setCategory(String category) {
         this.category = category;
     }

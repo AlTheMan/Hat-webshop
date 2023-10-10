@@ -14,7 +14,7 @@ public class ItemHandler {
 		ArrayList<Item> itemCollection = Item.getDBItemsAll();
 		ArrayList<Item> copy = new ArrayList<>();
 		for (Item item : itemCollection) {
-			Item copyItem = new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getQuantity(), item.getImagesrc(), item.getCategory(), item.getCategoryId());
+			Item copyItem = new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getQuantity(), item.getImagesrc(), item.getCategory());
 			copy.add(copyItem);
 		}
 		return copy;
