@@ -40,3 +40,7 @@ build/
 .idea/webContexts.xml
 .idea/workspace.xml
 .idea/workspace.xml
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/workspace.xml
+.idea/workspace.xml

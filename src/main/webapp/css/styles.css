@@ -1,0 +1,129 @@
+/* Resetting some default margins and paddings */
+body, h1, h2, h3, p, a, ul, li {
+    margin: 5px;
+    padding: 5px;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+/* Centering header contents */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.header h1 {
+    font-size: 2em;
+}
+
+/* Centering main content */
+.main-content {
+    min-height: 300px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Centering footer content */
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #e2e2e2;
+}
+
+.table {
+    border: 2px solid black;
+
+}
+
+/* Centering and styling links */
+a {
+    color: #007BFF;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #007BFF;
+    color: #fff;
+}
+/* Simple grid styling */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 10px; /* Spacing between images */
+}
+.image-cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img {
+    /*
+    width: 50px;
+    max-width: 100px;
+    /* max-width: 100%; /* Ensuring the images don't overflow their container */
+    /*height: 50px; */
+}
+
+.image-row {
+    display: flex;
+    flex-wrap: nowrap; /* Avoid wrapping to next line */
+    overflow-x: auto; /* Add scrollbar if necessary */
+    gap: 400px; /* Spacing between images */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+.grid-container-header {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+    width: 100px;
+}
+.image-header{
+    width: 100px;
+}
+
+.item-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.item-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.item-card-orders {
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.item-card-orders img {
+    max-width: 100%;
+    height: auto;
+}
