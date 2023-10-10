@@ -143,8 +143,10 @@ public class Item {
 		Item copy = new Item();
 		copy.id = item.id;
 		copy.name = item.name;
+		copy.description = item.description;
 		copy.quantity = item.quantity;
 		copy.price = item.price;
+		copy.imagesrc = item.imagesrc;
 		copy.category = Category.getCategoryCopy(item.category);
 		return copy;
 	}

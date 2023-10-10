@@ -11,6 +11,10 @@ public class OrderItem {
         this.nrOfItems = nrOfItems;
     }
 
+    public static OrderItem getCopy(OrderItem orderItem) {
+        return new OrderItem(Item.getCopy(orderItem.item), orderItem.nrOfItems);
+    }
+
     public Item getItem() {
         return item;
     }

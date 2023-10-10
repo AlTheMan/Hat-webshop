@@ -18,7 +18,6 @@
 <body>
 <%
     User user = (User) request.getAttribute("user");
-    System.out.println(user.getId());
     ShoppingCart shoppingCart = user.getShoppingcart();
 %>
 
@@ -28,7 +27,7 @@
     </h2>
 <br>
 <div class="grid-container">
-    <%
+    <% int itemDiff = 0;
     if (shoppingCart != null) {
         ArrayList<ShoppingItem> shoppingItem = shoppingCart.getItems();
         if (shoppingItem != null && !shoppingItem.isEmpty()) {
@@ -39,12 +38,14 @@
                         <img src="images/hat/<%= s.getItem().getImagesrc() %>" alt="<%= s.getItem().getName() %> Image">
                         <h3><%= s.getItem().getName() %></h3>
                         <p><%= s.getItem().getDescription() %></p>
-                        <p>Price: <%= s.getItem().getPrice() %></p>
-                        <p>Quantity: <%= s.getNrOfItems() %></p>
+                        <p>Price: <%= s.getItem().getPrice() * s.getNrOfItems() %></p>
+                        <p>Quantity: <% itemDiff = s.getItem().getQuantity() - s.getNrOfItems(); %> <%= s.getNrOfItems() %></p>
+                        <% if (itemDiff > 0) { %>
                         <form action="addItemToShoppingCartFromShoppingcartPage" method="post">
                             <input type="hidden" name="itemId" value="<%= s.getItem().getId() %>">
                             <input type="submit" value="+">
                         </form>
+                        <% } %>
                         <form action="removeItemFromShoppingCartFromShoppingcartPage" method="post">
                             <input type="hidden" name="itemId" value="<%= s.getItem().getId() %>">
                             <input type="submit" value="-">
@@ -56,12 +57,14 @@
         }
     }
     %>
+
 </div>
+<%if (shoppingCart != null){ %>
 <form method="post" action="buyItems">
-    <input type="submit" value="Purchase">
+    <label>Total price: <%=shoppingCart.getTotalPrice()%> <input type="submit" value="Purchase"></label>
 </form>
 
-<% %>
+<% } %>
 
 
 </body>

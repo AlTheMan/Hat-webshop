@@ -75,7 +75,7 @@ public class User {
 	}
 
 	public User(){
-		this.shoppingcart=new ShoppingCart();
+		this.shoppingcart = new ShoppingCart();
 	}
 
 	public int getId() {
@@ -90,7 +90,7 @@ public class User {
 		this.privilege = Privilege.valueOf(privilege);
 	}
 
-	public static List<User> getAllUsersFromDB(){
+	protected static List<User> getAllUsersFromDB(){
 		return UserDB.getAllUsersFromDB();
 	}
 
@@ -119,12 +119,6 @@ public class User {
 		}
 
 		User user = getCopy(dbUser);
-		/*user.id = dbUser.id;
-		user.userName = dbUser.userName;
-		user.email = dbUser.email;
-		user.privilege = dbUser.privilege;
-		user.address = dbUser.address;
-		user.shoppingcart=new ShoppingCart();*/
 		user.password = "********";
 		return user;
 	}

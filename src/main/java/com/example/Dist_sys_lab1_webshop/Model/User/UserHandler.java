@@ -14,9 +14,7 @@ public class UserHandler {
 
 
 	public static User authenticateUser(String username, String password){
-		User user = User.getUserFromDB(username, password);
-		if (user == null) return null;
-		return user;
+		return User.getUserFromDB(username, password);
 	}
 
 	public static boolean buyItems(User user) {

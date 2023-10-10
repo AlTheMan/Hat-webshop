@@ -31,11 +31,22 @@ public class Order {
         return orderItems;
     }
 
+    public ArrayList<OrderItem> getCopyOfOrderItems(ArrayList<OrderItem> orderItems) {
+        ArrayList<OrderItem> copy = new ArrayList<>();
+
+        for (OrderItem oi : orderItems) {
+            OrderItem itemCpy = OrderItem.getCopy(oi);
+            copy.add(itemCpy);
+        }
+
+        return copy;
+    }
+
     public static Collection<Order> getDBOrdersAll() {
         Collection<Order> ordersDB = OrderDB.getDBOrderAll2();
         Collection<Order> orders = new ArrayList<>();
         for (Order o: ordersDB){
-            orders.add(new Order(o.getOrderID(), o.getOrderItems(), o.customerName, o.orderDate, o.shippingAddress, o.orderStatus));
+            orders.add(new Order(o.getOrderID(), o.getCopyOfOrderItems(o.orderItems), o.customerName, o.orderDate, o.shippingAddress, o.orderStatus));
         }
         return orders;
     }

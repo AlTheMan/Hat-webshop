@@ -41,6 +41,26 @@ public class ShoppingCart {
         }
     }
 
+    public int getQuantityFromItemId(int itemId) {
+        for (ShoppingItem item : items) {
+            if (item.getItem().getId() == itemId) {
+
+                return item.getNrOfItems();
+            }
+        }
+        return 0;
+    }
+
+    public double getTotalPrice(){
+        double total = 0;
+
+        for (ShoppingItem item : items) {
+            total += item.getItem().getPrice() * item.getNrOfItems();
+        }
+
+        return total;
+    }
+
     public static ShoppingCart getCopy(ShoppingCart cart) {
         ArrayList<ShoppingItem> shoppingItems = cart.getItems();
         ShoppingCart cartCopy = new ShoppingCart();
